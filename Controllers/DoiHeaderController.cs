@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DOService.Models;
 
 namespace DOService.Controllers
@@ -40,6 +39,58 @@ namespace DOService.Controllers
             catch
             {
                 return false;
+            }
+        }
+
+        [HttpDelete]
+        public bool Delete(Guid id)
+        {
+            try
+            {
+                var item = _context.DoiHeaders.FirstOrDefault(x => x.Id == id);
+
+                if (item == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                _context.DoiHeaders.Remove(item);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        [HttpPut]
+        public DoiHeader Update(DoiHeader doiHeader)
+        {
+            try
+            {
+                var item = _context.DoiHeaders.FirstOrDefault(x => x.Id == doiHeader.Id);
+
+                if (item == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                item.ApprovedDate = doiHeader.ApprovedDate;
+                item.ApprovedFlag = doiHeader.ApprovedFlag;
+                item.ApprovedUserId = doiHeader.ApprovedUserId;
+                item.Description = doiHeader.Description;
+                item.OrganizationId = doiHeader.OrganizationId;
+
+                _context.DoiHeaders.Update(item);
+                _context.SaveChanges();
+
+                return _context.DoiHeaders.FirstOrDefault(x => x.Id == item.Id);
+            }
+            catch
+            {
+                return null;
             }
         }
     }
