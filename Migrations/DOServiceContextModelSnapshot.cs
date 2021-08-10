@@ -135,11 +135,20 @@ namespace DOService.Migrations
 
             modelBuilder.Entity("DOService.Models.DoiHeader", b =>
                 {
+<<<<<<< HEAD
                     b.HasOne("DOService.Models.Organization", null)
+=======
+                    b.HasOne("DOService.Models.Organization", "Organization")
+>>>>>>> aa29a3372e9a99502cba718fb59245e31b407c17
                         .WithMany("DoiHeaders")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+<<<<<<< HEAD
+=======
+
+                    b.Navigation("Organization");
+>>>>>>> aa29a3372e9a99502cba718fb59245e31b407c17
                 });
 
             modelBuilder.Entity("DOService.Models.Organization", b =>

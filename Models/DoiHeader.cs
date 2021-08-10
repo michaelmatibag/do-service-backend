@@ -6,6 +6,16 @@ namespace DOService.Models
     [Table("doi_headers")]
     public class DoiHeader
     {
+        public DoiHeader()
+        {
+            if (Id == Guid.Empty)
+            {
+                Id = new Guid();
+            }
+
+            Organization = new Organization();
+        }
+
         [Column("id")]
         public Guid Id { get; set; }
 
@@ -26,5 +36,7 @@ namespace DOService.Models
 
         [Column("created_date")]
         public DateTime CreatedDate { get; set; }
+
+        public Organization Organization {get; set;}
     }
 }
