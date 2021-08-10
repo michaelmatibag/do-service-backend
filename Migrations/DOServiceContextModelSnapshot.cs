@@ -59,43 +59,56 @@ namespace DOService.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("BurdenGroupId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("burden_group_id");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_date");
 
                     b.Property<Guid>("DoiHeaderId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("doi_header_id");
 
                     b.Property<DateTime>("EffectiveFromDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("effective_from_date");
 
                     b.Property<DateTime>("EffectiveToDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("effective_to_date");
 
                     b.Property<string>("InterestType")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("interest_type");
 
                     b.Property<decimal>("NriDecimal")
-                        .HasColumnType("numeric");
+                        .HasColumnType("numeric")
+                        .HasColumnName("nri_decimal");
 
                     b.Property<Guid>("OrganizationId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("organization_id");
 
                     b.Property<Guid>("OwnerId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("owner_id");
 
                     b.Property<string>("OwnerName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("owner_name");
 
                     b.Property<string>("PayCode")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("pay_code");
 
                     b.Property<string>("SuspenseReason")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("suspense_reason");
 
                     b.HasKey("Id");
 

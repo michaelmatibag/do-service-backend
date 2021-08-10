@@ -28,23 +28,23 @@ namespace DOService.Migrations
                 name: "doi_owners",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DoiHeaderId = table.Column<Guid>(type: "uuid", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
-                    OwnerName = table.Column<string>(type: "text", nullable: true),
-                    PayCode = table.Column<string>(type: "text", nullable: true),
-                    SuspenseReason = table.Column<string>(type: "text", nullable: true),
-                    InterestType = table.Column<string>(type: "text", nullable: true),
-                    NriDecimal = table.Column<decimal>(type: "numeric", nullable: false),
-                    BurdenGroupId = table.Column<Guid>(type: "uuid", nullable: false),
-                    EffectiveFromDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    EffectiveToDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    organization_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    doi_header_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    owner_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    owner_name = table.Column<string>(type: "text", nullable: true),
+                    pay_code = table.Column<string>(type: "text", nullable: true),
+                    suspense_reason = table.Column<string>(type: "text", nullable: true),
+                    interest_type = table.Column<string>(type: "text", nullable: true),
+                    nri_decimal = table.Column<decimal>(type: "numeric", nullable: false),
+                    burden_group_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    effective_from_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    effective_to_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    created_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_doi_owners", x => x.Id);
+                    table.PrimaryKey("PK_doi_owners", x => x.id);
                 });
         }
 

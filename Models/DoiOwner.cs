@@ -20,13 +20,29 @@ namespace DOService.Models
 
         [Column("owner_name")]
         public string OwnerName { get; set; }
+
+        [Column("pay_code")]
         public string PayCode { get; set; }
+
+        [Column("suspense_reason")]
         public string SuspenseReason { get; set; }
+
+        [Column("interest_type")]
         public string InterestType { get; set; }
+
+        [Column("nri_decimal")]
         public decimal NriDecimal { get; set; }
+
+        [Column("burden_group_id")]
         public Guid BurdenGroupId { get; set; }
+
+        [Column("effective_from_date")]
         public DateTime EffectiveFromDate { get; set; }
+
+        [Column("effective_to_date")]
         public DateTime EffectiveToDate { get; set; }
+
+        [Column("created_date")]
         public DateTime CreatedDate { get; set; }
     }
 }
