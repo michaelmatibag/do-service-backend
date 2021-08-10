@@ -52,6 +52,8 @@ namespace DOService.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrganizationId");
+
                     b.ToTable("doi_headers");
                 });
 
@@ -113,6 +115,38 @@ namespace DOService.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("doi_owners");
+                });
+
+            modelBuilder.Entity("DOService.Models.Organization", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("organization");
+                });
+
+            modelBuilder.Entity("DOService.Models.DoiHeader", b =>
+                {
+                    b.HasOne("DOService.Models.Organization", "Organization")
+                        .WithMany("DoiHeaders")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("DOService.Models.Organization", b =>
+                {
+                    b.Navigation("DoiHeaders");
                 });
 #pragma warning restore 612, 618
         }
