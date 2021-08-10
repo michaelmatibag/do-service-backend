@@ -24,11 +24,23 @@ namespace DOService.Controllers
         [HttpGet]
         public IEnumerable<DoiHeader> Get()
         {
-            var result = _context.DoiHeaders.Take(5);
+            return _context.DoiHeaders.OrderByDescending(x => x.CreatedDate).Take(5);
+        }
 
-            Console.WriteLine(result.Count());
+        [HttpPost]
+        public bool Add(DoiHeader doiHeader)
+        {
+            try
+            {
+                _context.DoiHeaders.Add(doiHeader);
+                _context.SaveChanges();
 
-            return result;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
