@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DOService.Migrations
 {
-    public partial class initial : Migration
+    public partial class inital : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,7 @@ namespace DOService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "organization",
+                name: "organizations",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -39,7 +39,7 @@ namespace DOService.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_organization", x => x.id);
+                    table.PrimaryKey("PK_organizations", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,9 +58,9 @@ namespace DOService.Migrations
                 {
                     table.PrimaryKey("PK_doi_headers", x => x.id);
                     table.ForeignKey(
-                        name: "FK_doi_headers_organization_organization_id",
+                        name: "FK_doi_headers_organizations_organization_id",
                         column: x => x.organization_id,
-                        principalTable: "organization",
+                        principalTable: "organizations",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -80,7 +80,7 @@ namespace DOService.Migrations
                 name: "doi_owners");
 
             migrationBuilder.DropTable(
-                name: "organization");
+                name: "organizations");
         }
     }
 }

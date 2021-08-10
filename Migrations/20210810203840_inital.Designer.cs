@@ -10,12 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DOService.Migrations
 {
     [DbContext(typeof(DOServiceContext))]
-<<<<<<< HEAD:Migrations/20210810200813_initial.Designer.cs
-    [Migration("20210810200813_initial")]
-=======
-    [Migration("20210810192203_initial")]
->>>>>>> aa29a3372e9a99502cba718fb59245e31b407c17:Migrations/20210810192203_initial.Designer.cs
-    partial class initial
+    [Migration("20210810203840_inital")]
+    partial class inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -136,25 +132,18 @@ namespace DOService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("organization");
+                    b.ToTable("organizations");
                 });
 
             modelBuilder.Entity("DOService.Models.DoiHeader", b =>
                 {
-<<<<<<< HEAD:Migrations/20210810200813_initial.Designer.cs
-                    b.HasOne("DOService.Models.Organization", null)
-=======
                     b.HasOne("DOService.Models.Organization", "Organization")
->>>>>>> aa29a3372e9a99502cba718fb59245e31b407c17:Migrations/20210810192203_initial.Designer.cs
                         .WithMany("DoiHeaders")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-<<<<<<< HEAD:Migrations/20210810200813_initial.Designer.cs
-=======
 
                     b.Navigation("Organization");
->>>>>>> aa29a3372e9a99502cba718fb59245e31b407c17:Migrations/20210810192203_initial.Designer.cs
                 });
 
             modelBuilder.Entity("DOService.Models.Organization", b =>
