@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DOService.Migrations
 {
     [DbContext(typeof(DOServiceContext))]
-    [Migration("20210810174317_initial")]
+    [Migration("20210810200813_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,6 +53,8 @@ namespace DOService.Migrations
                         .HasColumnName("organization_id");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("doi_headers");
                 });
@@ -115,6 +117,36 @@ namespace DOService.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("doi_owners");
+                });
+
+            modelBuilder.Entity("DOService.Models.Organization", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("organization");
+                });
+
+            modelBuilder.Entity("DOService.Models.DoiHeader", b =>
+                {
+                    b.HasOne("DOService.Models.Organization", null)
+                        .WithMany("DoiHeaders")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DOService.Models.Organization", b =>
+                {
+                    b.Navigation("DoiHeaders");
                 });
 #pragma warning restore 612, 618
         }

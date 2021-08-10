@@ -14,22 +14,41 @@ namespace DOService.Controllers
     public class OrganizationController : ControllerBase
     {
         private readonly ILogger<OrganizationController> _logger;
+        private readonly DOServiceContext _context;
 
-        public OrganizationController(ILogger<OrganizationController> logger)
+        public OrganizationController(ILogger<OrganizationController> logger, DOServiceContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
-        public IEnumerable<Organization> GetOrganizations(List<Guid> orgIDs = null)
+        public IEnumerable<Organization> GetOrganizations()
         {
-            return null;
+            try
+            {
+                return _context.Organizations.OrderBy(org => org.Name);
+            }
+            catch (Exception e)
+            {
+                throw new NpgsqlException($"Failed to get organziations. Error: {e.Message}");
+            }
         }
 
         [HttpPost]
-        public IEnumerable<Organization> PostOrganziations(List<Organization> organizations)
+        public bool PostOrganziations(List<Organization> organizations)
         {
-            return null;
+            try
+            {
+                _context.Organizations.AddRange(organizations);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new NpgsqlException($"Failed to post new organziations. Error: {e.Message}");
+            }
         }
 
         [HttpPut]
