@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 
 namespace DOService.Models
 {
-    public class DoiOwnerDoiHeader
+    public class DoiOwnerResponseDoiHeader
     {
         public Guid Id { get; set; }
         public Guid OrganizationId { get; set; }
@@ -11,6 +11,5 @@ namespace DOService.Models
         public DateTime ApprovedDate { get; set; }
         public string ApprovedUserId { get; set; }
         public DateTime CreatedDate { get; set; }
-        public OrganziationResponse Organization { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using DOService.Models;
 using Microsoft.EntityFrameworkCore;
 using DOService.Features.DoiHeaderRepository;
+using DOService.Features.DoiOwnerRepository;
 
 namespace DOService
 {
@@ -23,6 +24,7 @@ namespace DOService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IDoiHeaderRepository, DoiHeaderRepository>();
+            services.AddScoped<IDoiOwnerRepository, DoiOwnerRepository>();
             services.AddDbContext<DOServiceContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("doservice-db"));
