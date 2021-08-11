@@ -1,5 +1,6 @@
 ﻿using DOService.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
 {
@@ -20,9 +21,48 @@ namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
 
         public void SeedDatabase()
         {
-            DbContext.Organizations.Add(new Organization { Name = "Test Org 1" });
-            DbContext.Organizations.Add(new Organization { Name = "Test Org 2" });
-            DbContext.Organizations.Add(new Organization { Name = "Test Org 3" });
+            var org = new Organization { Name = "DOI Test Org" };
+            DbContext.Organizations.Add(org);
+
+            var dh1 = new DoiHeader
+            {
+                Id = Guid.NewGuid(),
+                Description = "Test DOI 1",
+                ApprovedFlag = true,
+                ApprovedDate = DateTime.Today,
+                ApprovedUserId = "Test User",
+                CreatedDate = DateTime.Today,
+                OrganizationId = org.Id,
+                Organization = org
+            };
+            DbContext.DoiHeaders.Add(dh1);
+
+            var dh2 = new DoiHeader
+            {
+                Id = Guid.NewGuid(),
+                Description = "Test DOI 2",
+                ApprovedFlag = true,
+                ApprovedDate = DateTime.Today,
+                ApprovedUserId = "Test User",
+                CreatedDate = DateTime.Today,
+                OrganizationId = org.Id,
+                Organization = org
+            };
+            DbContext.DoiHeaders.Add(dh1);
+
+            var dh3 = new DoiHeader
+            {
+                Id = Guid.NewGuid(),
+                Description = "Test DOI 3",
+                ApprovedFlag = true,
+                ApprovedDate = DateTime.Today,
+                ApprovedUserId = "Test User",
+                CreatedDate = DateTime.Today,
+                OrganizationId = org.Id,
+                Organization = org
+            };
+            DbContext.DoiHeaders.Add(dh1);
+
             DbContext.SaveChanges();
         }
     }
