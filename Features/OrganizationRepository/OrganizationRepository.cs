@@ -56,11 +56,7 @@ namespace DOService.Features.OrganizationRepository
                     Id = dh.Id,
                     OrganizationId = dh.OrganizationId
                 });
-            }
-                
-
-
-
+            } 
 
             return response;
         }
