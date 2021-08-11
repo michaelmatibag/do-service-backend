@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DOService.Migrations
 {
-    public partial class inital : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,23 +52,24 @@ namespace DOService.Migrations
                     approved_flag = table.Column<bool>(type: "boolean", nullable: false),
                     approved_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     approved_user_id = table.Column<string>(type: "text", nullable: true),
-                    created_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    created_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    organization_id1 = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_doi_headers", x => x.id);
                     table.ForeignKey(
-                        name: "FK_doi_headers_organizations_organization_id",
-                        column: x => x.organization_id,
+                        name: "FK_doi_headers_organizations_organization_id1",
+                        column: x => x.organization_id1,
                         principalTable: "organizations",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_doi_headers_organization_id",
+                name: "IX_doi_headers_organization_id1",
                 table: "doi_headers",
-                column: "organization_id");
+                column: "organization_id1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
