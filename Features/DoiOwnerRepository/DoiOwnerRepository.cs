@@ -71,7 +71,7 @@ namespace DOService.Features.DoiOwnerRepository
                     Id = organization.Id,
                     Name = organization.Name
                 },
-                DoiHeader = new DoiOwnerResponseDoiHeader
+                DoiHeader = new DoiHeaderResponse
                 {
                     ApprovedDate = doiHeader.ApprovedDate,
                     ApprovedFlag = doiHeader.ApprovedFlag,
@@ -120,7 +120,7 @@ namespace DOService.Features.DoiOwnerRepository
                     Id = doiOwner.Organization.Id,
                     Name = doiOwner.Organization.Name
                 },
-                DoiHeader = new DoiOwnerResponseDoiHeader
+                DoiHeader = new DoiHeaderResponse
                 {
                     ApprovedDate = doiOwner.DoiHeader.ApprovedDate,
                     ApprovedFlag = doiOwner.DoiHeader.ApprovedFlag,
@@ -137,7 +137,7 @@ namespace DOService.Features.DoiOwnerRepository
         {
             var response = new List<DoiOwnerResponse>();
 
-            foreach (var item in _context.DoiOwners.Include(x => x.Organization))
+            foreach (var item in _context.DoiOwners.Include(x => x.Organization).Include(x => x.DoiHeader))
             {
                 response.Add(new DoiOwnerResponse
                 {
@@ -159,7 +159,7 @@ namespace DOService.Features.DoiOwnerRepository
                         Id = item.Organization.Id,
                         Name = item.Organization.Name
                     },
-                    DoiHeader = new DoiOwnerResponseDoiHeader
+                    DoiHeader = new DoiHeaderResponse
                     {
                         ApprovedDate = item.DoiHeader.ApprovedDate,
                         ApprovedFlag = item.DoiHeader.ApprovedFlag,
@@ -233,7 +233,7 @@ namespace DOService.Features.DoiOwnerRepository
                     Id = item.Organization.Id,
                     Name = item.Organization.Name
                 },
-                DoiHeader = new DoiOwnerResponseDoiHeader
+                DoiHeader = new DoiHeaderResponse
                 {
                     ApprovedDate = item.DoiHeader.ApprovedDate,
                     ApprovedFlag = item.DoiHeader.ApprovedFlag,
