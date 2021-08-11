@@ -1,5 +1,4 @@
 using DOService.Controllers;
-using DOService.Features.DoiHeaderRepository;
 using DOService.Tests.FakeDbContexts.DoiHeaderContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,7 +20,7 @@ namespace DOService.Tests.DoiHeaderTests
                 var doiHeader = context.DbContext.DoiHeaders.First();
 
                 //Act
-                var action = new DoiHeaderController(null, new DoiHeaderRepository(context.DbContext)).DeleteDoiHeader(doiHeader.Id) as OkResult;
+                var action = new DoiHeaderController(null, context.Repository).DeleteDoiHeader(doiHeader.Id) as OkResult;
 
                 //Assert
                 Assert.IsNotNull(action);
