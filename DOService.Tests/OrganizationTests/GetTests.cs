@@ -14,11 +14,11 @@ namespace DOService.Tests.OrganizationTests.GetTests
         [TestMethod]
         public void GetAllOrganizations_ShouldReturnAllOrganizations()
         {
-            var OrgContext = new OrganizationContext();
-
-            using (var context = OrgContext.DbContext)
+            using (var orgContext = new OrganizationContext("GetTests"))
             {
-                OrgContext.SeedDatabase();
+                var context = orgContext.DbContext;
+
+                orgContext.SeedDatabase();
 
                 var controller = new OrganizationController(null, context);
 
@@ -32,11 +32,11 @@ namespace DOService.Tests.OrganizationTests.GetTests
         [TestMethod]
         public void GetOrganization_ShouldReturnAnOrganization()
         {
-            var OrgContext = new OrganizationContext();
-
-            using (var context = OrgContext.DbContext)
+            using (var orgContext = new OrganizationContext("GetTests"))
             {
-                OrgContext.SeedDatabase();
+                var context = orgContext.DbContext;
+
+                orgContext.SeedDatabase();
 
                 var controller = new OrganizationController(null, context);
 

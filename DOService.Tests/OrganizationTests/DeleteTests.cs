@@ -13,11 +13,11 @@ namespace DOService.Tests.OrganizationTests.DeleteTests
         [TestMethod]
         public void DeleteOrganization_ShouldUpdateAnOrganization()
         {
-            var OrgContext = new OrganizationContext();
-
-            using (var context = OrgContext.DbContext)
+            using (var orgContext = new OrganizationContext("DeleteTests"))
             {
-                OrgContext.SeedDatabase();
+                var context = orgContext.DbContext;
+
+                orgContext.SeedDatabase();
 
                 var controller = new OrganizationController(null, context);
 

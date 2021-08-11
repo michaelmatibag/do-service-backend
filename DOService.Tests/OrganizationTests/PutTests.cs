@@ -13,11 +13,11 @@ namespace DOService.Tests.OrganizationTests.PutTests
         [TestMethod]
         public void UpdateOrganziation_ShouldUpdateAnOrganization()
         {
-            var OrgContext = new OrganizationContext();
-
-            using (var context = OrgContext.DbContext)
+            using (var orgContext = new OrganizationContext("PutTests"))
             {
-                OrgContext.SeedDatabase();
+                var context = orgContext.DbContext;
+
+                orgContext.SeedDatabase();
 
                 var controller = new OrganizationController(null, context);
 

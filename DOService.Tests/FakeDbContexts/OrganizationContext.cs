@@ -3,19 +3,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DOService.Tests.FakeDbContexts.OrganizationContext
 {
-    public class OrganizationContext : DbContext
+    public sealed class OrganizationContext : DbContext
     {
-        private DbContextOptions<DOServiceContext> _options = new DbContextOptionsBuilder<DOServiceContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
-            .Options;
-
         private DOServiceContext _context;
 
         public DOServiceContext DbContext { get { return _context; } }
 
-        public OrganizationContext()
+        public OrganizationContext(string testName)
         {
-            _context = new DOServiceContext(_options);
+            var options = new DbContextOptionsBuilder<DOServiceContext>()
+                .UseInMemoryDatabase(databaseName: testName)
+                .Options;
+
+            _context = new DOServiceContext(options);
         }
 
         public void SeedDatabase()

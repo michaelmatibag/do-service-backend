@@ -12,10 +12,12 @@ namespace DOService.Tests.OrganizationTests.PostTests
         [TestMethod]
         public void AddOrganziation_ShouldAddAnOrganization()
         {
-            var OrgContext = new OrganizationContext();
-
-            using (var context = OrgContext.DbContext)
+            using (var orgContext = new OrganizationContext("PostTests"))
             {
+                var context = orgContext.DbContext;
+
+                orgContext.SeedDatabase();
+
                 var controller = new OrganizationController(null, context);
 
                 var newOrg = new OrganziationRequest
