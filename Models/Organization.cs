@@ -18,13 +18,13 @@ namespace DOService.Models
         public virtual ICollection<DoiHeader> DoiHeaders { get; set; } = new List<DoiHeader>();
     }
 
-    public class OrganziationResponse
+    public class OrganizationResponse
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
     }
 
-    public class OrganziationRequest
+    public class OrganizationRequest
     {
         public string Name { get; set; }
     }

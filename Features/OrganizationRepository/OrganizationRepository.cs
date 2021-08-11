@@ -15,14 +15,14 @@ namespace DOService.Features.OrganizationRepository
             _context = context;
         }
 
-        public OrganziationResponse AddOrganziation(OrganziationRequest request)
+        public OrganizationResponse AddOrganziation(OrganizationRequest request)
         {
             var org = new Organization { Name = request.Name };
 
             _context.Organizations.Add(org);
             _context.SaveChanges();
 
-            var response = new OrganziationResponse
+            var response = new OrganizationResponse
             {
                 Id = org.Id,
                 Name = org.Name
@@ -31,14 +31,14 @@ namespace DOService.Features.OrganizationRepository
             return response;
         }
 
-        public OrganziationResponse GetOrganization(Guid id)
+        public OrganizationResponse GetOrganization(Guid id)
         {
             var org = _context.Organizations.Find(id);
 
             if (org == null)
                 throw new KeyNotFoundException($"Organization with id {id} could not be found.");
 
-            var response = new OrganziationResponse
+            var response = new OrganizationResponse
             {
                 Id = org.Id,
                 Name = org.Name
@@ -47,10 +47,10 @@ namespace DOService.Features.OrganizationRepository
             return response;
         }
 
-        public IEnumerable<OrganziationResponse> GetAllOrganizations()
+        public IEnumerable<OrganizationResponse> GetAllOrganizations()
         {
             var orgs = _context.Organizations.OrderBy(org => org.Name);
-            var responses = orgs.Select(org => new OrganziationResponse
+            var responses = orgs.Select(org => new OrganizationResponse
             {
                 Id = org.Id,
                 Name = org.Name
@@ -59,7 +59,7 @@ namespace DOService.Features.OrganizationRepository
             return (responses);
         }
 
-        public OrganziationResponse UpdateOrganziation(Guid id, OrganziationRequest request)
+        public OrganizationResponse UpdateOrganziation(Guid id, OrganizationRequest request)
         {
             var org = _context.Organizations.Find(id);
 
@@ -71,7 +71,7 @@ namespace DOService.Features.OrganizationRepository
             _context.Organizations.Update(org);
             _context.SaveChanges();
 
-            var response = new OrganziationResponse
+            var response = new OrganizationResponse
             {
                 Id = org.Id,
                 Name = org.Name

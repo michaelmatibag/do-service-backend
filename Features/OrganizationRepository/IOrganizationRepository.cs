@@ -6,10 +6,10 @@ namespace DOService.Features.OrganizationRepository
 {
     public interface IOrganizationRepository
     {
-        OrganziationResponse AddOrganziation(OrganziationRequest request);
-        OrganziationResponse GetOrganization(Guid id);
-        IEnumerable<OrganziationResponse> GetAllOrganizations();
-        OrganziationResponse UpdateOrganziation(Guid id, OrganziationRequest request);
+        OrganizationResponse AddOrganziation(OrganizationRequest request);
+        OrganizationResponse GetOrganization(Guid id);
+        IEnumerable<OrganizationResponse> GetAllOrganizations();
+        OrganizationResponse UpdateOrganziation(Guid id, OrganizationRequest request);
         void DeleteOrganization(Guid id);
     }
 }

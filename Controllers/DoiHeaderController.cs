@@ -46,7 +46,7 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpPost("{request}")]
+        [HttpPost]
         public ActionResult<DoiHeaderResponse> AddDoiHeader(DoiHeaderRequest request)
         {
             try
@@ -74,7 +74,7 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpPut("{id}/{request}")]
+        [HttpPut("{id}")]
         public ActionResult<DoiHeaderResponse> UpdateDoiHeader(Guid id, DoiHeaderRequest request)
         {
             try

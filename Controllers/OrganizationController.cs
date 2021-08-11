@@ -22,7 +22,7 @@ namespace DOService.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<OrganziationResponse>> GetAllOrganizations()
+        public ActionResult<ICollection<OrganizationResponse>> GetAllOrganizations()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace DOService.Controllers
         }
 
         [HttpGet("{orgId}")]
-        public ActionResult<OrganziationResponse> GetOrganization(Guid orgId)
+        public ActionResult<OrganizationResponse> GetOrganization(Guid orgId)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace DOService.Controllers
         }
 
         [HttpPost("{request}")]
-        public ActionResult<OrganziationResponse> AddOrganziation(OrganziationRequest request)
+        public ActionResult<OrganizationResponse> AddOrganziation(OrganizationRequest request)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace DOService.Controllers
         }
 
         [HttpPut("{orgId}/{request}")]
-        public ActionResult<OrganziationResponse> UpdateOrganziation(Guid orgId, OrganziationRequest request)
+        public ActionResult<OrganizationResponse> UpdateOrganziation(Guid orgId, OrganizationRequest request)
         {
             try
             {

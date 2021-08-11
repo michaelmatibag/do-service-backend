@@ -11,6 +11,6 @@ namespace DOService.Models
         public DateTime ApprovedDate { get; set; }
         public string ApprovedUserId { get; set; }
         public DateTime CreatedDate { get; set; }
-        public OrganziationResponse Organization { get; set; }
+        public OrganizationResponse Organization { get; set; }
     }
 }

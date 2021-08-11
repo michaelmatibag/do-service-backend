@@ -46,7 +46,7 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpPost("{request}")]
+        [HttpPost]
         public ActionResult<DoiOwnerResponse> AddDoiOwner(DoiOwnerRequest request)
         {
             try
@@ -74,7 +74,7 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpPut("{id}/{request}")]
+        [HttpPut("{id}")]
         public ActionResult<DoiOwnerResponse> UpdateDoiOwner(Guid id, DoiOwnerRequest request)
         {
             try
