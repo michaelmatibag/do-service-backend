@@ -12,7 +12,8 @@ namespace DOService.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: true)
+                    name = table.Column<string>(type: "text", nullable: true),
+                    quti = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

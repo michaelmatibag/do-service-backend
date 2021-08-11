@@ -69,7 +69,8 @@ namespace DOService.Features.DoiOwnerRepository
                 Organization = new OrganizationResponse
                 {
                     Id = organization.Id,
-                    Name = organization.Name
+                    Name = organization.Name,
+                    Quti = organization.Quti
                 },
                 DoiHeader = new DoiHeaderResponse
                 {
@@ -118,7 +119,8 @@ namespace DOService.Features.DoiOwnerRepository
                 Organization = new OrganizationResponse
                 {
                     Id = doiOwner.Organization.Id,
-                    Name = doiOwner.Organization.Name
+                    Name = doiOwner.Organization.Name,
+                    Quti = doiOwner.Organization.Quti
                 },
                 DoiHeader = new DoiHeaderResponse
                 {
@@ -157,7 +159,8 @@ namespace DOService.Features.DoiOwnerRepository
                     Organization = new OrganizationResponse
                     {
                         Id = item.Organization.Id,
-                        Name = item.Organization.Name
+                        Name = item.Organization.Name,
+                        Quti = item.Organization.Quti
                     },
                     DoiHeader = new DoiHeaderResponse
                     {
@@ -231,7 +234,8 @@ namespace DOService.Features.DoiOwnerRepository
                 Organization = new OrganizationResponse
                 {
                     Id = item.Organization.Id,
-                    Name = item.Organization.Name
+                    Name = item.Organization.Name,
+                    Quti = item.Organization.Quti
                 },
                 DoiHeader = new DoiHeaderResponse
                 {

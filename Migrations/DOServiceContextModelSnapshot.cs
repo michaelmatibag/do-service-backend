@@ -132,6 +132,10 @@ namespace DOService.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<string>("Quti")
+                        .HasColumnType("text")
+                        .HasColumnName("quti");
+
                     b.HasKey("Id");
 
                     b.ToTable("organizations");

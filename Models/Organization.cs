@@ -15,6 +15,9 @@ namespace DOService.Models
         [Column("name")]
         public string Name { get; set; }
 
+        [Column("quti")]
+        public string Quti { get; set; }
+
         public virtual ICollection<DoiHeader> DoiHeaders { get; set; } = new List<DoiHeader>();
         public virtual ICollection<DoiOwner> DoiOwners { get; set; } = new List<DoiOwner>();
     }
@@ -23,13 +26,15 @@ namespace DOService.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public virtual IEnumerable<DoiHeaderResponse> DoiHeaders { get; set; }
+        public string Quti { get; set; }
 
+        public virtual IEnumerable<DoiHeaderResponse> DoiHeaders { get; set; }
         public virtual IEnumerable<DoiOwnerResponse> ActiveOwners { get; set; }
     }
 
     public class OrganizationRequest
     {
         public string Name { get; set; }
+        public string Quti { get; set; }
     }
 }

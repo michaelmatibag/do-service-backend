@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DOService.Migrations
 {
     [DbContext(typeof(DOServiceContext))]
-    [Migration("20210811191517_initial")]
+    [Migration("20210811193534_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,6 +133,10 @@ namespace DOService.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text")
                         .HasColumnName("name");
+
+                    b.Property<string>("Quti")
+                        .HasColumnType("text")
+                        .HasColumnName("quti");
 
                     b.HasKey("Id");
 

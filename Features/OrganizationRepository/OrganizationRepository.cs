@@ -25,7 +25,8 @@ namespace DOService.Features.OrganizationRepository
             var response = new OrganizationResponse
             {
                 Id = org.Id,
-                Name = org.Name
+                Name = org.Name,
+                Quti = org.Quti
             };
 
             return response;
@@ -44,7 +45,8 @@ namespace DOService.Features.OrganizationRepository
             var response = new OrganizationResponse
             {
                 Id = org.Id,
-                Name = org.Name
+                Name = org.Name,
+                Quti = org.Quti
             };
 
             if(org.DoiHeaders.Any())
@@ -99,7 +101,8 @@ namespace DOService.Features.OrganizationRepository
                 var organization = new OrganizationResponse
                 {
                     Id = org.Id,
-                    Name = org.Name
+                    Name = org.Name,
+                    Quti = org.Quti
                 };
 
                 if (org.DoiHeaders.Any())
@@ -160,7 +163,8 @@ namespace DOService.Features.OrganizationRepository
             var response = new OrganizationResponse
             {
                 Id = org.Id,
-                Name = org.Name
+                Name = org.Name,
+                Quti = org.Quti
             };
 
             return response;
