@@ -10,11 +10,22 @@ namespace DOService.Models
     {
         [Column("id")]
         [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
 
         [Column("name")]
         public string Name { get; set; }
 
         public virtual ICollection<DoiHeader> DoiHeaders { get; set; }
+    }
+
+    public class OrganziationResponse
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class OrganziationRequest
+    {
+        public string Name { get; set; }
     }
 }

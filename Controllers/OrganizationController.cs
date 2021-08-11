@@ -21,37 +21,124 @@ namespace DOService.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Organization> GetAllOrganizations()
-        {
-            return _context.Organizations.OrderBy(org => org.Name);
-        }
-
-        [HttpGet("async")]
-        public async Task<IEnumerable<Organization>> GetAllOrganizationsAsync()
-        {
-            return await Task.FromResult(GetAllOrganizations());
-        }
-
-        [HttpPost]
-        public bool PostOrganziations(List<Organization> organizations)
+        public ActionResult<ICollection<Organization>> GetAllOrganizations()
         {
             try
             {
-                _context.Organizations.AddRange(organizations);
-                _context.SaveChanges();
+                var orgs = _context.Organizations.OrderBy(org => org.Name);
 
-                return true;
+                return Ok(orgs);
             }
             catch (Exception e)
             {
-                throw new Exception($"Failed to post new organziations. Error: {e.Message}");
+                return BadRequest(e.InnerException);
+            }
+        }
+
+        [HttpGet]
+        [Route("{orgId}")]
+        public ActionResult<OrganziationResponse> GetOrganization(Guid orgId)
+        {
+            try
+            {
+                var org = _context.Organizations.Find(orgId);
+
+                if (org == null)
+                    return NotFound($"Organization with id {orgId} could not be found.");
+
+                var response = new OrganziationResponse
+                {
+                    Id = org.Id,
+                    Name = org.Name
+                };
+
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.InnerException);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult<OrganziationResponse> AddOrganziation(OrganziationRequest request)
+        {
+            try
+            {
+                var org = new Organization
+                {
+                    Id = Guid.NewGuid(),
+                    Name = request.Name,
+                    DoiHeaders = new List<DoiHeader>()
+                };
+
+                _context.Organizations.Add(org);
+                _context.SaveChanges();
+
+                var response = new OrganziationResponse
+                {
+                    Id = org.Id,
+                    Name = org.Name
+                };
+
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.InnerException);
             }
         }
 
         [HttpPut]
-        public IEnumerable<Organization> PutOrganziations(List<Organization> organizations)
+        [Route("{orgId}")]
+        public ActionResult<OrganziationResponse> UpdateOrganziation(Guid orgId, OrganziationRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var org = _context.Organizations.Find(orgId);
+
+                if (org == null)
+                    return NotFound($"Organization with id {orgId} could not be found.");
+
+                org.Name = request.Name;
+
+                _context.Organizations.Update(org);
+                _context.SaveChanges();
+
+                var response = new OrganziationResponse
+                {
+                    Id = org.Id,
+                    Name = org.Name
+                };
+
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.InnerException);
+            }
+        }
+
+        [HttpDelete]
+        [Route("{orgId}")]
+        public IActionResult DeleteOrganization(Guid orgId)
+        {
+            try
+            {
+                var org = _context.Organizations.Find(orgId);
+
+                if (org == null)
+                    return NotFound($"Organization with id {orgId} could not be found.");
+
+                _context.Organizations.Remove(org);
+                _context.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.InnerException);
+            }
         }
     }
 }
