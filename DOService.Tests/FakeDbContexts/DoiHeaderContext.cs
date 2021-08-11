@@ -21,10 +21,10 @@ namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
 
         public void SeedDatabase()
         {
-            var org = new Organization { Name = "DOI Test Org" };
-            DbContext.Organizations.Add(org);
+            var organization = new Organization { Name = "DOI Test Org" };
 
-            var dh1 = new DoiHeader
+            DbContext.Organizations.Add(organization);
+            DbContext.DoiHeaders.Add(new DoiHeader
             {
                 Id = Guid.NewGuid(),
                 Description = "Test DOI 1",
@@ -32,12 +32,10 @@ namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
                 ApprovedDate = DateTime.Today,
                 ApprovedUserId = "Test User",
                 CreatedDate = DateTime.Today,
-                OrganizationId = org.Id,
-                Organization = org
-            };
-            DbContext.DoiHeaders.Add(dh1);
-
-            var dh2 = new DoiHeader
+                OrganizationId = organization.Id,
+                Organization = organization
+            });
+            DbContext.DoiHeaders.Add(new DoiHeader
             {
                 Id = Guid.NewGuid(),
                 Description = "Test DOI 2",
@@ -45,12 +43,10 @@ namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
                 ApprovedDate = DateTime.Today,
                 ApprovedUserId = "Test User",
                 CreatedDate = DateTime.Today,
-                OrganizationId = org.Id,
-                Organization = org
-            };
-            DbContext.DoiHeaders.Add(dh1);
-
-            var dh3 = new DoiHeader
+                OrganizationId = organization.Id,
+                Organization = organization
+            });
+            DbContext.DoiHeaders.Add(new DoiHeader
             {
                 Id = Guid.NewGuid(),
                 Description = "Test DOI 3",
@@ -58,11 +54,9 @@ namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
                 ApprovedDate = DateTime.Today,
                 ApprovedUserId = "Test User",
                 CreatedDate = DateTime.Today,
-                OrganizationId = org.Id,
-                Organization = org
-            };
-            DbContext.DoiHeaders.Add(dh1);
-
+                OrganizationId = organization.Id,
+                Organization = organization
+            });
             DbContext.SaveChanges();
         }
     }
