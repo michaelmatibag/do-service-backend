@@ -49,14 +49,40 @@ namespace DOService.Features.OrganizationRepository
 
         public IEnumerable<OrganizationResponse> GetAllOrganizations()
         {
-            var orgs = _context.Organizations.OrderBy(org => org.Name);
-            var responses = orgs.Select(org => new OrganizationResponse
-            {
-                Id = org.Id,
-                Name = org.Name
-            });
+            var orgs = _context.Organizations.Include(x => x.DoiHeaders).OrderBy(org => org.Name);
+            var response = new List<OrganizationResponse>();
 
-            return (responses);
+            foreach (var org in orgs)
+            {
+                var organization = new OrganizationResponse
+                {
+                    Id = org.Id,
+                    Name = org.Name
+                };
+
+                if (org.DoiHeaders.Any())
+                {
+                    organization.DoiHeaders = new List<DoiHeaderResponse>();
+                }
+
+                foreach (var doiHeader in org.DoiHeaders)
+                {
+                    organization.DoiHeaders.Add(new DoiHeaderResponse
+                    {
+                        ApprovedDate = doiHeader.ApprovedDate,
+                        ApprovedFlag = doiHeader.ApprovedFlag,
+                        ApprovedUserId = doiHeader.ApprovedUserId,
+                        CreatedDate = doiHeader.ApprovedDate,
+                        Description = doiHeader.Description,
+                        Id = doiHeader.Id,
+                        OrganizationId = doiHeader.OrganizationId
+                    });
+                }
+
+                response.Add(organization);
+            }
+
+            return response;
         }
 
         public OrganizationResponse UpdateOrganziation(Guid id, OrganizationRequest request)
