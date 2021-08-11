@@ -4,7 +4,7 @@ using DOService.Tests.FakeDbContexts.OrganizationContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DOService.Tests.OrganizationTests.PostTests
+namespace DOService.Tests.OrganizationTests
 {
     [TestClass]
     public class PostTests

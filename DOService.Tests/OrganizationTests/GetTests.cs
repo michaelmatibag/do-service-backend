@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace DOService.Tests.OrganizationTests.GetTests
+namespace DOService.Tests.OrganizationTests
 {
     [TestClass]
     public class GetTests

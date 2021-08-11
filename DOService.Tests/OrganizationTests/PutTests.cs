@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace DOService.Tests.OrganizationTests.PutTests
+namespace DOService.Tests.OrganizationTests
 {
     [TestClass]
     public class PutTests
