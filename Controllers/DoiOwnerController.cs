@@ -4,11 +4,13 @@ using System;
 using DOService.Models;
 using DOService.Features.DoiOwnerRepository;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Cors;
 
 namespace DOService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [EnableCors]
     public class DoiOwnerController : ControllerBase
     {
         private readonly ILogger<DoiOwnerController> _logger;
