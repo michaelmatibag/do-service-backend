@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using DOService.Models;
 using Microsoft.EntityFrameworkCore;
+using DOService.Features.DoiHeaderRepository;
 
 namespace DOService
 {
@@ -21,6 +22,7 @@ namespace DOService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IDoiHeaderRepository, DoiHeaderRepository>();
             services.AddDbContext<DOServiceContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("doservice-db"));
