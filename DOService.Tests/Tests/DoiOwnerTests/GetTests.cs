@@ -19,7 +19,7 @@ namespace DOService.Tests.DoiOwnerTests
             {
                 context.SeedDatabase();
 
-                var action = new OrganizationController(null, new OrganizationRepository(context.DbContext)).GetOrganizations().Result as OkObjectResult;
+                var action = new OrganizationController(null, new OrganizationRepository(context.ServiceContext)).GetOrganizations().Result as OkObjectResult;
 
                 Assert.AreEqual(3, (action.Value as IEnumerable<OrganizationResponse>).Count());
             }
@@ -32,9 +32,9 @@ namespace DOService.Tests.DoiOwnerTests
             {
                 context.SeedDatabase();
 
-                var organization = context.DbContext.Organizations.First();
+                var organization = context.ServiceContext.Organizations.First();
 
-                var action = new OrganizationController(null, new OrganizationRepository(context.DbContext)).GetOrganization(organization.Id).Result as OkObjectResult;
+                var action = new OrganizationController(null, new OrganizationRepository(context.ServiceContext)).GetOrganization(organization.Id).Result as OkObjectResult;
 
                 var result = action.Value as OrganizationResponse;
 

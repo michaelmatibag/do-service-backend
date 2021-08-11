@@ -19,7 +19,7 @@ namespace DOService.Tests.OrganizationTests
 
                 var organizationRequest = new OrganizationRequest { Name = "Test Org 4" };
 
-                var action = new OrganizationController(null, new OrganizationRepository(context.DbContext)).AddOrganization(organizationRequest).Result as OkObjectResult;
+                var action = new OrganizationController(null, new OrganizationRepository(context.ServiceContext)).AddOrganization(organizationRequest).Result as OkObjectResult;
                 
                 var result = action.Value as OrganizationResponse;
 

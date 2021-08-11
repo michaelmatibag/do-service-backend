@@ -8,10 +8,8 @@ namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
     public sealed class DoiHeaderContext : DbContext
     {
         private DOServiceContext _context;
-        private DoiHeaderRepository _repository;
         
-        public DOServiceContext DbContext => _context;
-        public DoiHeaderRepository Repository => _repository;
+        public DOServiceContext ServiceContext => _context;
 
         public DoiHeaderContext(string testName)
         {
@@ -19,15 +17,14 @@ namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
                 new DbContextOptionsBuilder<DOServiceContext>()
                     .UseInMemoryDatabase(databaseName: testName)
                     .Options);
-            _repository = new DoiHeaderRepository(_context);
         }
 
         public void SeedDatabase()
         {
             var organization = new Organization { Name = "DOI Test Org" };
 
-            DbContext.Organizations.Add(organization);
-            DbContext.DoiHeaders.Add(new DoiHeader
+            ServiceContext.Organizations.Add(organization);
+            ServiceContext.DoiHeaders.Add(new DoiHeader
             {
                 Id = Guid.NewGuid(),
                 Description = "Test DOI 1",
@@ -38,7 +35,7 @@ namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
                 OrganizationId = organization.Id,
                 Organization = organization
             });
-            DbContext.DoiHeaders.Add(new DoiHeader
+            ServiceContext.DoiHeaders.Add(new DoiHeader
             {
                 Id = Guid.NewGuid(),
                 Description = "Test DOI 2",
@@ -49,7 +46,7 @@ namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
                 OrganizationId = organization.Id,
                 Organization = organization
             });
-            DbContext.DoiHeaders.Add(new DoiHeader
+            ServiceContext.DoiHeaders.Add(new DoiHeader
             {
                 Id = Guid.NewGuid(),
                 Description = "Test DOI 3",
@@ -60,7 +57,7 @@ namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
                 OrganizationId = organization.Id,
                 Organization = organization
             });
-            DbContext.SaveChanges();
+            ServiceContext.SaveChanges();
         }
     }
 }

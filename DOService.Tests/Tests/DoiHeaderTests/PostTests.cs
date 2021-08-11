@@ -1,5 +1,6 @@
 using System.Linq;
 using DOService.Controllers;
+using DOService.Features.DoiHeaderRepository;
 using DOService.Models;
 using DOService.Tests.FakeDbContexts.DoiHeaderContext;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace DOService.Tests.DoiHeaderTests
                 //Arrange
                 context.SeedDatabase();
 
-                var organization = context.DbContext.Organizations.First();
+                var organization = context.ServiceContext.Organizations.First();
                 var doiHeaderRequest = new DoiHeaderRequest
                 {
                     Description = "NewDoiHeader",
@@ -26,7 +27,7 @@ namespace DOService.Tests.DoiHeaderTests
                 };
 
                 //Act
-                var action = new DoiHeaderController(null, context.Repository).AddDoiHeader(doiHeaderRequest).Result as OkObjectResult;
+                var action = new DoiHeaderController(null, new DoiHeaderRepository(context.ServiceContext)).AddDoiHeader(doiHeaderRequest).Result as OkObjectResult;
 
                 //Assert
                 var result = action.Value as DoiHeaderResponse;

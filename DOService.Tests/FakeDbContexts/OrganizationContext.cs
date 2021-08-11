@@ -6,25 +6,24 @@ namespace DOService.Tests.FakeDbContexts.OrganizationContext
 {
     public sealed class OrganizationContext : DbContext
     {
-        private DOServiceContext _dbContext;
+        private DOServiceContext _context;
 
-        public DOServiceContext DbContext { get { return _dbContext; } }
+        public DOServiceContext ServiceContext => _context;
 
         public OrganizationContext(string testName)
         {
-            var options = new DbContextOptionsBuilder<DOServiceContext>()
-                .UseInMemoryDatabase(databaseName: testName)
-                .Options;
-
-            _dbContext = new DOServiceContext(options);
+            _context = new DOServiceContext(
+                new DbContextOptionsBuilder<DOServiceContext>()
+                    .UseInMemoryDatabase(databaseName: testName)
+                    .Options);
         }
 
         public void SeedDatabase()
         {
-            DbContext.Organizations.Add(new Organization { Name = "Test Org 1" });
-            DbContext.Organizations.Add(new Organization { Name = "Test Org 2" });
-            DbContext.Organizations.Add(new Organization { Name = "Test Org 3" });
-            DbContext.SaveChanges();
+            ServiceContext.Organizations.Add(new Organization { Name = "Test Org 1" });
+            ServiceContext.Organizations.Add(new Organization { Name = "Test Org 2" });
+            ServiceContext.Organizations.Add(new Organization { Name = "Test Org 3" });
+            ServiceContext.SaveChanges();
         }
     }
 }

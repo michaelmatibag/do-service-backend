@@ -1,4 +1,5 @@
 using DOService.Controllers;
+using DOService.Features.DoiHeaderRepository;
 using DOService.Models;
 using DOService.Tests.FakeDbContexts.DoiHeaderContext;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace DOService.Tests.DoiHeaderTests
                 //Arrange
                 context.SeedDatabase();
 
-                var doiHeader = context.DbContext.DoiHeaders.First();
+                var doiHeader = context.ServiceContext.DoiHeaders.First();
                 var doiHeaderRequest = new DoiHeaderRequest
                 {
                     ApprovedDate = doiHeader.ApprovedDate,
@@ -29,7 +30,7 @@ namespace DOService.Tests.DoiHeaderTests
                 };
 
                 //Act
-                var action = new DoiHeaderController(null, context.Repository).UpdateDoiHeader(doiHeader.Id, doiHeaderRequest).Result as OkObjectResult;
+                var action = new DoiHeaderController(null, new DoiHeaderRepository(context.ServiceContext)).UpdateDoiHeader(doiHeader.Id, doiHeaderRequest).Result as OkObjectResult;
 
                 //Assert
                 var result = action.Value as DoiHeaderResponse;

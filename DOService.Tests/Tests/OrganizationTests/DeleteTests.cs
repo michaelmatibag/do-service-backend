@@ -17,13 +17,13 @@ namespace DOService.Tests.OrganizationTests
             {
                 context.SeedDatabase();
 
-                var organization = context.DbContext.Organizations.First();
+                var organization = context.ServiceContext.Organizations.First();
 
-                var action = new OrganizationController(null, new OrganizationRepository(context.DbContext)).DeleteOrganization(organization.Id) as OkResult;
+                var action = new OrganizationController(null, new OrganizationRepository(context.ServiceContext)).DeleteOrganization(organization.Id) as OkResult;
 
                 Assert.IsNotNull(action);
                 Assert.AreEqual(action.StatusCode, 200);
-                Assert.IsNull(context.DbContext.Organizations.Find(organization.Id));
+                Assert.IsNull(context.ServiceContext.Organizations.Find(organization.Id));
             }
         }
     }

@@ -7,23 +7,26 @@ namespace DOService.Tests.FakeDbContexts.DoiOwnerContext
     {
         private DOServiceContext _context;
 
-        public DOServiceContext DbContext { get { return _context; } }
+        public DOServiceContext ServiceContext => _context;
 
         public DoiOwnerContext(string testName)
         {
-            var options = new DbContextOptionsBuilder<DOServiceContext>()
-                .UseInMemoryDatabase(databaseName: testName)
-                .Options;
-
-            _context = new DOServiceContext(options);
+            _context = new DOServiceContext(
+                new DbContextOptionsBuilder<DOServiceContext>()
+                    .UseInMemoryDatabase(databaseName: testName)
+                    .Options);
         }
 
         public void SeedDatabase()
         {
-            DbContext.Organizations.Add(new Organization { Name = "Test Org 1" });
-            DbContext.Organizations.Add(new Organization { Name = "Test Org 2" });
-            DbContext.Organizations.Add(new Organization { Name = "Test Org 3" });
-            DbContext.SaveChanges();
+            var organization = new Organization { Name = "DOI Owner Test Org" };
+
+            ServiceContext.Organizations.Add(organization);
+
+            ServiceContext.Organizations.Add(new Organization { Name = "Test Org 1" });
+            ServiceContext.Organizations.Add(new Organization { Name = "Test Org 2" });
+            ServiceContext.Organizations.Add(new Organization { Name = "Test Org 3" });
+            ServiceContext.SaveChanges();
         }
     }
 }

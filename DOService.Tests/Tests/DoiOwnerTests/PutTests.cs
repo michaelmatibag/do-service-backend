@@ -19,11 +19,11 @@ namespace DOService.Tests.DoiOwnerTests
 
                 context.SeedDatabase();
 
-                var organization = context.DbContext.Organizations.First();
+                var organization = context.ServiceContext.Organizations.First();
 
                 var organizationRequest = new OrganizationRequest { Name = "Update Test" };
 
-                var action = new OrganizationController(null, new OrganizationRepository(context.DbContext)).UpdateOrganization(organization.Id, organizationRequest).Result as OkObjectResult;
+                var action = new OrganizationController(null, new OrganizationRepository(context.ServiceContext)).UpdateOrganization(organization.Id, organizationRequest).Result as OkObjectResult;
 
                 var result = action.Value as OrganizationResponse;
 
