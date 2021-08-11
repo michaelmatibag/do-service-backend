@@ -1,5 +1,6 @@
 ﻿using DOService.Features.OrganizationRepository;
 using DOService.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,6 +11,7 @@ namespace DOService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [EnableCors]
     public class OrganizationController : ControllerBase
     {
         private readonly ILogger<OrganizationController> _logger;
