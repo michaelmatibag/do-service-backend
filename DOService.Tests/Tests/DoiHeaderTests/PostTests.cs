@@ -12,7 +12,7 @@ namespace DOService.Tests.DoiHeaderTests
         [TestMethod]
         public void AddOrganziation_ShouldAddAnOrganization()
         {
-            using (var orgContext = new OrganizationContext("PostTests"))
+            using (var orgContext = new OrganizationContext("DoiHeader.PostTests"))
             {
                 var context = orgContext.DbContext;
 

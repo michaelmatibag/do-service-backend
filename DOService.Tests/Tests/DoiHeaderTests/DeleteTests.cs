@@ -12,7 +12,7 @@ namespace DOService.Tests.DoiHeaderTests
         [TestMethod]
         public void DeleteOrganization_ShouldUpdateAnOrganization()
         {
-            using (var orgContext = new OrganizationContext("DeleteTests"))
+            using (var orgContext = new OrganizationContext("DoiHeader.DeleteTests"))
             {
                 var context = orgContext.DbContext;
 

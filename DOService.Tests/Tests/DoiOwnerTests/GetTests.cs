@@ -14,7 +14,7 @@ namespace DOService.Tests.DoiOwnerTests
         [TestMethod]
         public void GetAllOrganizations_ShouldReturnAllOrganizations()
         {
-            using (var orgContext = new OrganizationContext("GetTests"))
+            using (var orgContext = new OrganizationContext("DoiOwner.GetTests"))
             {
                 var context = orgContext.DbContext;
 
@@ -32,7 +32,7 @@ namespace DOService.Tests.DoiOwnerTests
         [TestMethod]
         public void GetOrganization_ShouldReturnAnOrganization()
         {
-            using (var orgContext = new OrganizationContext("GetTests"))
+            using (var orgContext = new OrganizationContext("DoiOwner.GetTests"))
             {
                 var context = orgContext.DbContext;
 

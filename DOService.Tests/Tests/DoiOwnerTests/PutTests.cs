@@ -13,7 +13,7 @@ namespace DOService.Tests.DoiOwnerTests
         [TestMethod]
         public void UpdateOrganziation_ShouldUpdateAnOrganization()
         {
-            using (var orgContext = new OrganizationContext("PutTests"))
+            using (var orgContext = new OrganizationContext("DoiOwner.PutTests"))
             {
                 var context = orgContext.DbContext;
 
