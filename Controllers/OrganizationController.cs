@@ -1,4 +1,5 @@
-﻿using DOService.Models;
+﻿using DOService.Features.OrganizationRepository;
+using DOService.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,12 +13,12 @@ namespace DOService.Controllers
     public class OrganizationController : ControllerBase
     {
         private readonly ILogger<OrganizationController> _logger;
-        private readonly DOServiceContext _context;
+        private readonly IOrganizationRepository _orgRepository;
 
-        public OrganizationController(ILogger<OrganizationController> logger, DOServiceContext context)
+        public OrganizationController(ILogger<OrganizationController> logger, IOrganizationRepository orgRepository)
         {
             _logger = logger;
-            _context = context;
+            _orgRepository = orgRepository;
         }
 
         [HttpGet]
@@ -25,14 +26,7 @@ namespace DOService.Controllers
         {
             try
             {
-                var orgs = _context.Organizations.OrderBy(org => org.Name);
-                var responses = orgs.Select(org => new OrganziationResponse
-                {
-                    Id = org.Id,
-                    Name = org.Name
-                });
-
-                return Ok(responses);
+                return Ok(_orgRepository.GetAllOrganizations());
             }
             catch (Exception e)
             {
@@ -40,24 +34,12 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("{orgId}")]
+        [HttpGet("{orgId}")]
         public ActionResult<OrganziationResponse> GetOrganization(Guid orgId)
         {
             try
             {
-                var org = _context.Organizations.Find(orgId);
-
-                if (org == null)
-                    return NotFound($"Organization with id {orgId} could not be found.");
-
-                var response = new OrganziationResponse
-                {
-                    Id = org.Id,
-                    Name = org.Name
-                };
-
-                return Ok(response);
+                return Ok(_orgRepository.GetOrganization(orgId));
             }
             catch (Exception e)
             {
@@ -65,23 +47,12 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("{request}")]
         public ActionResult<OrganziationResponse> AddOrganziation(OrganziationRequest request)
         {
             try
             {
-                var org = new Organization { Name = request.Name };
-
-                _context.Organizations.Add(org);
-                _context.SaveChanges();
-
-                var response = new OrganziationResponse
-                {
-                    Id = org.Id,
-                    Name = org.Name
-                };
-
-                return Ok(response);
+                return Ok(_orgRepository.AddOrganziation(request));
             }
             catch (Exception e)
             {
@@ -89,29 +60,12 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("{orgId}")]
+        [HttpPut("{orgId}/{request}")]
         public ActionResult<OrganziationResponse> UpdateOrganziation(Guid orgId, OrganziationRequest request)
         {
             try
             {
-                var org = _context.Organizations.Find(orgId);
-
-                if (org == null)
-                    return NotFound($"Organization with id {orgId} could not be found.");
-
-                org.Name = request.Name;
-
-                _context.Organizations.Update(org);
-                _context.SaveChanges();
-
-                var response = new OrganziationResponse
-                {
-                    Id = org.Id,
-                    Name = org.Name
-                };
-
-                return Ok(response);
+                return Ok(_orgRepository.UpdateOrganziation(orgId, request));
             }
             catch (Exception e)
             {
@@ -119,20 +73,12 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("{orgId}")]
+        [HttpDelete("{orgId}")]
         public IActionResult DeleteOrganization(Guid orgId)
         {
             try
             {
-                var org = _context.Organizations.Find(orgId);
-
-                if (org == null)
-                    return NotFound($"Organization with id {orgId} could not be found.");
-
-                _context.Organizations.Remove(org);
-                _context.SaveChanges();
-
+                _orgRepository.DeleteOrganization(orgId);
                 return Ok(null);
             }
             catch (Exception e)

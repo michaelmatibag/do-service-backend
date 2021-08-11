@@ -8,6 +8,7 @@ using DOService.Models;
 using Microsoft.EntityFrameworkCore;
 using DOService.Features.DoiHeaderRepository;
 using DOService.Features.DoiOwnerRepository;
+using DOService.Features.OrganizationRepository;
 
 namespace DOService
 {
@@ -23,6 +24,7 @@ namespace DOService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddScoped<IDoiHeaderRepository, DoiHeaderRepository>();
             services.AddScoped<IDoiOwnerRepository, DoiOwnerRepository>();
             services.AddDbContext<DOServiceContext>(options =>
