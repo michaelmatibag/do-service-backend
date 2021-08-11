@@ -1,6 +1,5 @@
 using System.Linq;
 using DOService.Controllers;
-using DOService.Features.DoiHeaderRepository;
 using DOService.Models;
 using DOService.Tests.FakeDbContexts.DoiHeaderContext;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +26,7 @@ namespace DOService.Tests.DoiHeaderTests
                 };
 
                 //Act
-                var action = new DoiHeaderController(null, new DoiHeaderRepository(context.DbContext)).AddDoiHeader(doiHeaderRequest).Result as OkObjectResult;
+                var action = new DoiHeaderController(null, context.Repository).AddDoiHeader(doiHeaderRequest).Result as OkObjectResult;
 
                 //Assert
                 var result = action.Value as DoiHeaderResponse;

@@ -5,7 +5,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using DOService.Tests.FakeDbContexts.DoiHeaderContext;
-using DOService.Features.DoiHeaderRepository;
 using Microsoft.EntityFrameworkCore;
 
 namespace DOService.Tests.DoiHeaderTests
@@ -22,7 +21,7 @@ namespace DOService.Tests.DoiHeaderTests
                 context.SeedDatabase();
 
                 //Act
-                var action = new DoiHeaderController(null, new DoiHeaderRepository(context.DbContext)).GetDoiHeaders().Result as OkObjectResult;
+                var action = new DoiHeaderController(null, context.Repository).GetDoiHeaders().Result as OkObjectResult;
 
                 //Assert
                 Assert.AreEqual(3, (action.Value as IEnumerable<DoiHeaderResponse>).Count());
@@ -40,7 +39,7 @@ namespace DOService.Tests.DoiHeaderTests
                 var doiHeader = context.DbContext.DoiHeaders.Include(x => x.Organization).First();
 
                 //Act
-                var action = new DoiHeaderController(null, new DoiHeaderRepository(context.DbContext)).GetDoiHeader(doiHeader.Id).Result as OkObjectResult;
+                var action = new DoiHeaderController(null, context.Repository).GetDoiHeader(doiHeader.Id).Result as OkObjectResult;
 
                 //Assert
                 var result = action.Value as DoiHeaderResponse;

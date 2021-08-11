@@ -1,4 +1,5 @@
-﻿using DOService.Models;
+﻿using DOService.Features.DoiHeaderRepository;
+using DOService.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -7,16 +8,18 @@ namespace DOService.Tests.FakeDbContexts.DoiHeaderContext
     public sealed class DoiHeaderContext : DbContext
     {
         private DOServiceContext _context;
-
-        public DOServiceContext DbContext { get { return _context; } }
+        private DoiHeaderRepository _repository;
+        
+        public DOServiceContext DbContext => _context;
+        public DoiHeaderRepository Repository => _repository;
 
         public DoiHeaderContext(string testName)
         {
-            var options = new DbContextOptionsBuilder<DOServiceContext>()
-                .UseInMemoryDatabase(databaseName: testName)
-                .Options;
-
-            _context = new DOServiceContext(options);
+            _context = new DOServiceContext(
+                new DbContextOptionsBuilder<DOServiceContext>()
+                    .UseInMemoryDatabase(databaseName: testName)
+                    .Options);
+            _repository = new DoiHeaderRepository(_context);
         }
 
         public void SeedDatabase()
