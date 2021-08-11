@@ -14,11 +14,12 @@ namespace DOService.Tests.DoiHeaderTests
         {
             using (var orgContext = new OrganizationContext("DoiHeader.DeleteTests"))
             {
+                var repostory = orgContext.Repository;
                 var context = orgContext.DbContext;
 
                 orgContext.SeedDatabase();
 
-                var controller = new OrganizationController(null, context);
+                var controller = new OrganizationController(null, repostory);
 
                 var org = context.Organizations.First();
 

@@ -14,7 +14,7 @@ namespace DOService.Tests.OrganizationTests
         [TestMethod]
         public void GetOrganizations_ShouldReturnAllOrganizations()
         {
-            using (var orgContext = new OrganizationContext("Organization.GetTests"))
+            using (var orgContext = new OrganizationContext("GetTests.GetOrganizations"))
             {
                 var repository = orgContext.Repository;
 
@@ -32,7 +32,7 @@ namespace DOService.Tests.OrganizationTests
         [TestMethod]
         public void GetOrganization_ShouldReturnAnOrganization()
         {
-            using (var orgContext = new OrganizationContext("Organization.GetTests"))
+            using (var orgContext = new OrganizationContext("GetTests.GetOrganization"))
             {
                 var context = orgContext.DbContext;
                 var repository = orgContext.Repository;

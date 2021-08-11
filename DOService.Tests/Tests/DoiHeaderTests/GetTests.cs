@@ -16,11 +16,11 @@ namespace DOService.Tests.DoiHeaderTests
         {
             using (var orgContext = new OrganizationContext("DoiHeader.GetTests"))
             {
-                var context = orgContext.DbContext;
+                var repostory = orgContext.Repository;
 
                 orgContext.SeedDatabase();
 
-                var controller = new OrganizationController(null, context);
+                var controller = new OrganizationController(null, repostory);
 
                 var action = controller.GetOrganizations().Result as OkObjectResult;
                 var result = (action.Value as IEnumerable<Organization>).ToList();
@@ -34,11 +34,12 @@ namespace DOService.Tests.DoiHeaderTests
         {
             using (var orgContext = new OrganizationContext("DoiHeader.GetTests"))
             {
+                var repostory = orgContext.Repository;
                 var context = orgContext.DbContext;
 
                 orgContext.SeedDatabase();
 
-                var controller = new OrganizationController(null, context);
+                var controller = new OrganizationController(null, repostory);
 
                 var org = context.Organizations.First();
 

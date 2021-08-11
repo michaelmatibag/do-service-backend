@@ -15,11 +15,12 @@ namespace DOService.Tests.DoiOwnerTests
         {
             using (var orgContext = new OrganizationContext("DoiOwner.PutTests"))
             {
+                var repostory = orgContext.Repository;
                 var context = orgContext.DbContext;
 
                 orgContext.SeedDatabase();
 
-                var controller = new OrganizationController(null, context);
+                var controller = new OrganizationController(null, repostory);
 
                 var org = context.Organizations.First();
 

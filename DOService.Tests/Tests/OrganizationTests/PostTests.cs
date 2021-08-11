@@ -12,7 +12,7 @@ namespace DOService.Tests.OrganizationTests
         [TestMethod]
         public void AddOrganization_ShouldAddAnOrganization()
         {
-            using (var orgContext = new OrganizationContext("Organization.PostTests"))
+            using (var orgContext = new OrganizationContext("PostTests.AddOrganization"))
             {
                 var repository = orgContext.Repository;
 
