@@ -10,9 +10,11 @@ namespace DOService.Models
         public Guid Id { get; set; }
 
         [Column("organization_id")]
+        [ForeignKey("id")]
         public Guid OrganizationId { get; set; }
 
         [Column("doi_header_id")]
+        [ForeignKey("id")]
         public Guid DoiHeaderId { get; set; }
 
         [Column("owner_id")]
@@ -44,5 +46,9 @@ namespace DOService.Models
 
         [Column("created_date")]
         public DateTime CreatedDate { get; set; }
+
+        public virtual Organization Organization { get; set; }
+
+        public virtual DoiHeader DoiHeader { get; set; }
     }
 }

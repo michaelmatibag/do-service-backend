@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DOService.Migrations
 {
     [DbContext(typeof(DOServiceContext))]
-    [Migration("20210810210639_initial")]
+    [Migration("20210811160606_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,13 +52,9 @@ namespace DOService.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("organization_id");
 
-                    b.Property<Guid?>("organization_id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("organization_id1");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("organization_id");
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("doi_headers");
                 });
@@ -120,6 +116,10 @@ namespace DOService.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DoiHeaderId");
+
+                    b.HasIndex("OrganizationId");
+
                     b.ToTable("doi_owners");
                 });
 
@@ -143,9 +143,35 @@ namespace DOService.Migrations
                 {
                     b.HasOne("DOService.Models.Organization", "Organization")
                         .WithMany("DoiHeaders")
-                        .HasForeignKey("organization_id");
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("DOService.Models.DoiOwner", b =>
+                {
+                    b.HasOne("DOService.Models.DoiHeader", "DoiHeader")
+                        .WithMany("DoiOwners")
+                        .HasForeignKey("DoiHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DOService.Models.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DoiHeader");
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("DOService.Models.DoiHeader", b =>
+                {
+                    b.Navigation("DoiOwners");
                 });
 
             modelBuilder.Entity("DOService.Models.Organization", b =>

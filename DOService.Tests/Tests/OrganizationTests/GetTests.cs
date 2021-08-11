@@ -23,7 +23,7 @@ namespace DOService.Tests.OrganizationTests
                 var controller = new OrganizationController(null, context);
 
                 var action = controller.GetAllOrganizations().Result as OkObjectResult;
-                var result = (action.Value as IEnumerable<Organization>).ToList();
+                var result = (action.Value as IEnumerable<OrganziationResponse>).ToList();
 
                 Assert.AreEqual(3, result.Count);
             }

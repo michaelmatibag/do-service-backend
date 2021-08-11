@@ -21,13 +21,18 @@ namespace DOService.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<Organization>> GetAllOrganizations()
+        public ActionResult<ICollection<OrganziationResponse>> GetAllOrganizations()
         {
             try
             {
                 var orgs = _context.Organizations.OrderBy(org => org.Name);
+                var responses = orgs.Select(org => new OrganziationResponse
+                {
+                    Id = org.Id,
+                    Name = org.Name
+                });
 
-                return Ok(orgs);
+                return Ok(responses);
             }
             catch (Exception e)
             {
