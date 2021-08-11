@@ -65,12 +65,7 @@ namespace DOService.Controllers
         {
             try
             {
-                var org = new Organization
-                {
-                    Id = Guid.NewGuid(),
-                    Name = request.Name,
-                    DoiHeaders = new List<DoiHeader>()
-                };
+                var org = new Organization { Name = request.Name };
 
                 _context.Organizations.Add(org);
                 _context.SaveChanges();
@@ -133,7 +128,7 @@ namespace DOService.Controllers
                 _context.Organizations.Remove(org);
                 _context.SaveChanges();
 
-                return Ok();
+                return Ok(null);
             }
             catch (Exception e)
             {
