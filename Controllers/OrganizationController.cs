@@ -34,12 +34,12 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpGet("{orgId}")]
-        public ActionResult<OrganizationResponse> GetOrganization(Guid orgId)
+        [HttpGet("{id}")]
+        public ActionResult<OrganizationResponse> GetOrganization(Guid id)
         {
             try
             {
-                return Ok(_orgRepository.GetOrganization(orgId));
+                return Ok(_orgRepository.GetOrganization(id));
             }
             catch (Exception e)
             {
@@ -47,7 +47,7 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpPost("{request}")]
+        [HttpPost]
         public ActionResult<OrganizationResponse> AddOrganziation(OrganizationRequest request)
         {
             try
@@ -60,12 +60,12 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpPut("{orgId}/{request}")]
-        public ActionResult<OrganizationResponse> UpdateOrganziation(Guid orgId, OrganizationRequest request)
+        [HttpPut("{id}")]
+        public ActionResult<OrganizationResponse> UpdateOrganziation(Guid id, OrganizationRequest request)
         {
             try
             {
-                return Ok(_orgRepository.UpdateOrganziation(orgId, request));
+                return Ok(_orgRepository.UpdateOrganziation(id, request));
             }
             catch (Exception e)
             {
@@ -73,12 +73,12 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpDelete("{orgId}")]
-        public IActionResult DeleteOrganization(Guid orgId)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteOrganization(Guid id)
         {
             try
             {
-                _orgRepository.DeleteOrganization(orgId);
+                _orgRepository.DeleteOrganization(id);
                 return Ok(null);
             }
             catch (Exception e)
