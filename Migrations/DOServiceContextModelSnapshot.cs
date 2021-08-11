@@ -157,7 +157,7 @@ namespace DOService.Migrations
                         .IsRequired();
 
                     b.HasOne("DOService.Models.Organization", "Organization")
-                        .WithMany()
+                        .WithMany("DoiOwners")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -175,6 +175,8 @@ namespace DOService.Migrations
             modelBuilder.Entity("DOService.Models.Organization", b =>
                 {
                     b.Navigation("DoiHeaders");
+
+                    b.Navigation("DoiOwners");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,13 +1,16 @@
-﻿using DOService.Models;
+﻿using DOService.Features.OrganizationRepository;
+using DOService.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DOService.Tests.FakeDbContexts.OrganizationContext
 {
     public sealed class OrganizationContext : DbContext
     {
-        private DOServiceContext _context;
+        private OrganizationRepository _repository;
+        public OrganizationRepository Repository { get { return _repository; } }
 
-        public DOServiceContext DbContext { get { return _context; } }
+        private DOServiceContext _dbContext;
+        public DOServiceContext DbContext { get { return _dbContext; } }
 
         public OrganizationContext(string testName)
         {
@@ -15,7 +18,9 @@ namespace DOService.Tests.FakeDbContexts.OrganizationContext
                 .UseInMemoryDatabase(databaseName: testName)
                 .Options;
 
-            _context = new DOServiceContext(options);
+            _dbContext = new DOServiceContext(options);
+
+            _repository = new OrganizationRepository(_dbContext);
         }
 
         public void SeedDatabase()

@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DOService.Migrations
 {
     [DbContext(typeof(DOServiceContext))]
-    [Migration("20210811170434_initial")]
+    [Migration("20210811191517_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -159,7 +159,7 @@ namespace DOService.Migrations
                         .IsRequired();
 
                     b.HasOne("DOService.Models.Organization", "Organization")
-                        .WithMany()
+                        .WithMany("DoiOwners")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -177,6 +177,8 @@ namespace DOService.Migrations
             modelBuilder.Entity("DOService.Models.Organization", b =>
                 {
                     b.Navigation("DoiHeaders");
+
+                    b.Navigation("DoiOwners");
                 });
 #pragma warning restore 612, 618
         }

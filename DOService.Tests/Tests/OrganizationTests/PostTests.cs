@@ -14,11 +14,11 @@ namespace DOService.Tests.OrganizationTests
         {
             using (var orgContext = new OrganizationContext("Organization.PostTests"))
             {
-                var context = orgContext.DbContext;
+                var repository = orgContext.Repository;
 
                 orgContext.SeedDatabase();
 
-                var controller = new OrganizationController(null, context);
+                var controller = new OrganizationController(null, repository);
 
                 var newOrg = new OrganizationRequest
                 {

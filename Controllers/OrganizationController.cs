@@ -48,11 +48,11 @@ namespace DOService.Controllers
         }
 
         [HttpPost]
-        public ActionResult<OrganizationResponse> AddOrganziation(OrganizationRequest request)
+        public ActionResult<OrganizationResponse> AddOrganization(OrganizationRequest request)
         {
             try
             {
-                return Ok(_orgRepository.AddOrganziation(request));
+                return Ok(_orgRepository.AddOrganization(request));
             }
             catch (Exception e)
             {
@@ -61,11 +61,11 @@ namespace DOService.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<OrganizationResponse> UpdateOrganziation(Guid id, OrganizationRequest request)
+        public ActionResult<OrganizationResponse> UpdateOrganization(Guid id, OrganizationRequest request)
         {
             try
             {
-                return Ok(_orgRepository.UpdateOrganziation(id, request));
+                return Ok(_orgRepository.UpdateOrganization(id, request));
             }
             catch (Exception e)
             {

@@ -16,6 +16,7 @@ namespace DOService.Models
         public string Name { get; set; }
 
         public virtual ICollection<DoiHeader> DoiHeaders { get; set; } = new List<DoiHeader>();
+        public virtual ICollection<DoiOwner> DoiOwners { get; set; } = new List<DoiOwner>();
     }
 
     public class OrganizationResponse
@@ -23,6 +24,8 @@ namespace DOService.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public virtual IEnumerable<DoiHeaderResponse> DoiHeaders { get; set; }
+
+        public virtual IEnumerable<DoiOwnerResponse> ActiveOwners { get; set; }
     }
 
     public class OrganizationRequest

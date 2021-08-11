@@ -15,7 +15,7 @@ namespace DOService.Features.OrganizationRepository
             _context = context;
         }
 
-        public OrganizationResponse AddOrganziation(OrganizationRequest request)
+        public OrganizationResponse AddOrganization(OrganizationRequest request)
         {
             var org = new Organization { Name = request.Name };
 
@@ -33,7 +33,10 @@ namespace DOService.Features.OrganizationRepository
 
         public OrganizationResponse GetOrganization(Guid id)
         {
-            var org = _context.Organizations.Include(org => org.DoiHeaders).FirstOrDefault(org => org.Id == id);
+            var org = _context.Organizations
+                .Include(org => org.DoiHeaders)
+                .Include(org => org.DoiOwners)
+                .FirstOrDefault(org => org.Id == id);
 
             if (org == null)
                 throw new KeyNotFoundException($"Organization with id {id} could not be found.");
@@ -56,7 +59,30 @@ namespace DOService.Features.OrganizationRepository
                     Id = dh.Id,
                     OrganizationId = dh.OrganizationId
                 });
-            } 
+            }
+
+            var date = DateTime.Now;
+            if(org.DoiOwners.Any())
+            {
+                response.ActiveOwners = org.DoiOwners
+                        .Where(owner => owner.EffectiveFromDate <= date && date >= owner.EffectiveToDate)
+                        .Select(owner => new DoiOwnerResponse
+                {
+                    BurdenGroupId = owner.BurdenGroupId,
+                    CreatedDate = owner.CreatedDate,
+                    DoiHeaderId = owner.DoiHeaderId,
+                    EffectiveFromDate = owner.EffectiveFromDate,
+                    EffectiveToDate = owner.EffectiveToDate,
+                    Id = owner.Id,
+                    InterestType = owner.InterestType,
+                    NriDecimal = owner.NriDecimal,
+                    OrganizationId = owner.OrganizationId,
+                    OwnerId = owner.OwnerId,
+                    OwnerName = owner.OwnerName,
+                    PayCode = owner.PayCode,
+                    SuspenseReason = owner.SuspenseReason
+                });
+            }
 
             return response;
         }
@@ -65,7 +91,10 @@ namespace DOService.Features.OrganizationRepository
         {
             var response = new List<OrganizationResponse>();
 
-            foreach (var org in _context.Organizations.Include(x => x.DoiHeaders).OrderBy(org => org.Name))
+            foreach (var org in _context.Organizations
+                .Include(org => org.DoiHeaders)
+                .Include(org => org.DoiOwners)
+                .OrderBy(org => org.Name))
             {
                 var organization = new OrganizationResponse
                 {
@@ -87,13 +116,36 @@ namespace DOService.Features.OrganizationRepository
                     });
                 }
 
+                var date = DateTime.Now;
+                if (org.DoiOwners.Any())
+                {
+                    organization.ActiveOwners = org.DoiOwners
+                        .Where(owner => owner.EffectiveFromDate <= date && date >= owner.EffectiveToDate)
+                        .Select(owner => new DoiOwnerResponse
+                    {
+                        BurdenGroupId = owner.BurdenGroupId,
+                        CreatedDate = owner.CreatedDate,
+                        DoiHeaderId = owner.DoiHeaderId,
+                        EffectiveFromDate = owner.EffectiveFromDate,
+                        EffectiveToDate = owner.EffectiveToDate,
+                        Id = owner.Id,
+                        InterestType = owner.InterestType,
+                        NriDecimal = owner.NriDecimal,
+                        OrganizationId = owner.OrganizationId,
+                        OwnerId = owner.OwnerId,
+                        OwnerName = owner.OwnerName,
+                        PayCode = owner.PayCode,
+                        SuspenseReason = owner.SuspenseReason
+                    });
+                }
+
                 response.Add(organization);
             }
 
             return response;
         }
 
-        public OrganizationResponse UpdateOrganziation(Guid id, OrganizationRequest request)
+        public OrganizationResponse UpdateOrganization(Guid id, OrganizationRequest request)
         {
             var org = _context.Organizations.Find(id);
 
