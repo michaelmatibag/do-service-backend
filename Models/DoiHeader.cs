@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,5 +32,7 @@ namespace DOService.Models
         public DateTime CreatedDate { get; set; }
 
         public virtual Organization Organization {get; set;}
+
+        public virtual ICollection<DoiOwner> DoiOwners { get; set; }
     }
 }
