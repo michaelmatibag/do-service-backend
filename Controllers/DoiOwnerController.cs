@@ -21,11 +21,11 @@ namespace DOService.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<DoiHeaderResponse> GetDoiHeader(Guid id)
+        public ActionResult<DoiOwnerResponse> GetDoiOwner(Guid id)
         {
             try
             {
-                return Ok(_doiOwnerRepository.GetDoiHeader(id));
+                return Ok(_doiOwnerRepository.GetDoiOwner(id));
             }
             catch (Exception e)
             {
@@ -34,11 +34,11 @@ namespace DOService.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<DoiHeaderResponse>> GetDoiHeaders()
+        public ActionResult<IEnumerable<DoiOwnerResponse>> GetDoiOwners()
         {
             try
             {
-                return Ok(_doiOwnerRepository.GetDoiHeaders());
+                return Ok(_doiOwnerRepository.GetDoiOwners());
             }
             catch (Exception e)
             {
@@ -47,11 +47,11 @@ namespace DOService.Controllers
         }
 
         [HttpPost("{request}")]
-        public ActionResult<DoiHeaderResponse> AddDoiHeader(DoiHeaderRequest request)
+        public ActionResult<DoiOwnerResponse> AddDoiOwner(DoiOwnerRequest request)
         {
             try
             {
-                return Ok(_doiOwnerRepository.AddDoiHeader(request));
+                return Ok(_doiOwnerRepository.AddDoiOwner(request));
             }
             catch (Exception e)
             {
@@ -60,11 +60,11 @@ namespace DOService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteDoiHeader(Guid id)
+        public IActionResult DeleteDoiOwner(Guid id)
         {
             try
             {
-                _doiOwnerRepository.DeleteDoiHeader(id);
+                _doiOwnerRepository.DeleteDoiOwner(id);
 
                 return Ok();
             }
@@ -75,11 +75,11 @@ namespace DOService.Controllers
         }
 
         [HttpPut("{id}/{request}")]
-        public ActionResult<DoiHeaderResponse> UpdateDoiHeader(Guid id, DoiHeaderRequest request)
+        public ActionResult<DoiOwnerResponse> UpdateDoiOwner(Guid id, DoiOwnerRequest request)
         {
             try
             {
-                return Ok(_doiOwnerRepository.UpdateDoiHeader(id, request));
+                return Ok(_doiOwnerRepository.UpdateDoiOwner(id, request));
             }
             catch (Exception e)
             {

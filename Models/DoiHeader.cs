@@ -31,7 +31,7 @@ namespace DOService.Models
         [Column("created_date")]
         public DateTime CreatedDate { get; set; }
 
-        public virtual Organization Organization {get; set;}
+        public virtual Organization Organization { get; set; }
 
         public virtual ICollection<DoiOwner> DoiOwners { get; set; }
     }
