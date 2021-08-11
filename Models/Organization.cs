@@ -9,13 +9,12 @@ namespace DOService.Models
     [Table("organizations")]
     public class Organization
     {
-
         [Column("id")]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Column("name")]
         public string Name { get; set; }
 
-        public List<DoiHeader> DoiHeaders { get; set; }
+        public List<DoiHeader> DoiHeaders { get; set; } = new List<DoiHeader>();
     }
 }

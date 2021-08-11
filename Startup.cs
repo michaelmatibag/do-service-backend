@@ -22,12 +22,13 @@ namespace DOService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DOServiceContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("doservice-db")));
-
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DOService", Version = "v1" });
+                options.UseNpgsql(Configuration.GetConnectionString("doservice-db"));
+            });
+            services.AddControllers();
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "DOService", Version = "v1" });
             });
         }
 

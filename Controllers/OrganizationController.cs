@@ -1,5 +1,4 @@
 ﻿using DOService.Models;
-using Npgsql;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -23,16 +22,15 @@ namespace DOService.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Organization> GetOrganizations()
+        public IEnumerable<Organization> GetAllOrganizations()
         {
-            try
-            {
-                return _context.Organizations.OrderBy(org => org.Name);
-            }
-            catch (Exception e)
-            {
-                throw new NpgsqlException($"Failed to get organziations. Error: {e.Message}");
-            }
+            return _context.Organizations.OrderBy(org => org.Name);
+        }
+
+        [HttpGet("async")]
+        public async Task<IEnumerable<Organization>> GetAllOrganizationsAsync()
+        {
+            return await Task.FromResult(GetAllOrganizations());
         }
 
         [HttpPost]
@@ -47,7 +45,7 @@ namespace DOService.Controllers
             }
             catch (Exception e)
             {
-                throw new NpgsqlException($"Failed to post new organziations. Error: {e.Message}");
+                throw new Exception($"Failed to post new organziations. Error: {e.Message}");
             }
         }
 
