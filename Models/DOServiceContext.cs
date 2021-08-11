@@ -8,7 +8,7 @@ namespace DOService.Models
         { }
 
         public DbSet<Organization> Organizations { get; set; }
-        public DbSet<DoiHeader> DoiHeaders { get; set;}
-        public DbSet<DoiOwner> DoiOwners { get; set;}
+        public DbSet<DoiHeader> DoiHeaders { get; set; }
+        public DbSet<DoiOwner> DoiOwners { get; set; }
     }
 }
