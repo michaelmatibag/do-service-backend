@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DOService.Models
@@ -7,6 +8,7 @@ namespace DOService.Models
     public class DoiOwner
     {
         [Column("id")]
+        [Key]
         public Guid Id { get; set; }
 
         [Column("organization_id")]
@@ -47,8 +49,8 @@ namespace DOService.Models
         [Column("created_date")]
         public DateTime CreatedDate { get; set; }
 
-        public virtual Organization Organization { get; set; }
-
-        public virtual DoiHeader DoiHeader { get; set; }
+        public virtual Organization Organization { get;set; }
+        
+        public virtual DoiHeader DoiHeader { get;set; }
     }
 }

@@ -27,6 +27,5 @@ namespace DOService.Models
         public DateTime EffectiveToDate { get; set; }
 
         public DateTime CreatedDate { get; set; }
-
     }
 }
