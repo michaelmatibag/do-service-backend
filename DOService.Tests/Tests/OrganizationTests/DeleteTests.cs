@@ -1,5 +1,4 @@
 using DOService.Controllers;
-using DOService.Models;
 using DOService.Tests.FakeDbContexts.OrganizationContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
