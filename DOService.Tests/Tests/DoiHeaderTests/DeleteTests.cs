@@ -1,5 +1,6 @@
 using DOService.Controllers;
-using DOService.Tests.FakeDbContexts.OrganizationContext;
+using DOService.Features.DoiHeaderRepository;
+using DOService.Tests.FakeDbContexts.DoiHeaderContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
@@ -10,27 +11,22 @@ namespace DOService.Tests.DoiHeaderTests
     public class DeleteTests
     {
         [TestMethod]
-        public void DeleteOrganization_ShouldUpdateAnOrganization()
+        public void DeleteDoiHeader_ShouldDeleteADoiHeader()
         {
-            using (var orgContext = new OrganizationContext("DoiHeader.DeleteTests"))
+            using (var context = new DoiHeaderContext("DoiHeader.DeleteTests"))
             {
-                var repostory = orgContext.Repository;
-                var context = orgContext.DbContext;
+                //Arrange
+                context.SeedDatabase();
 
-                orgContext.SeedDatabase();
+                var doiHeader = context.DbContext.DoiHeaders.First();
 
-                var controller = new OrganizationController(null, repostory);
+                //Act
+                var action = new DoiHeaderController(null, new DoiHeaderRepository(context.DbContext)).DeleteDoiHeader(doiHeader.Id) as OkResult;
 
-                var org = context.Organizations.First();
-
-                var action = controller.DeleteOrganization(org.Id) as OkObjectResult;
-
+                //Assert
                 Assert.IsNotNull(action);
-                Assert.IsNull(action.Value);
-
-                var nullOrg = context.Organizations.Find(org.Id);
-
-                Assert.IsNull(nullOrg);
+                Assert.AreEqual(action.StatusCode, 200);
+                Assert.IsNull(context.DbContext.Organizations.Find(doiHeader.Id));
             }
         }
     }

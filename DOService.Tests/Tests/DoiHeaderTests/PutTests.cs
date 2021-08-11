@@ -1,6 +1,7 @@
 using DOService.Controllers;
+using DOService.Features.DoiHeaderRepository;
 using DOService.Models;
-using DOService.Tests.FakeDbContexts.OrganizationContext;
+using DOService.Tests.FakeDbContexts.DoiHeaderContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
@@ -11,31 +12,30 @@ namespace DOService.Tests.DoiHeaderTests
     public class PutTests
     {
         [TestMethod]
-        public void UpdateOrganization_ShouldUpdateAnOrganization()
+        public void UpdateDoiHeader_ShouldUpdateADoiHeader()
         {
-            using (var orgContext = new OrganizationContext("DoiHeader.PutTests"))
+            using (var context = new DoiHeaderContext("DoiHeader.PutTests"))
             {
-                var repostory = orgContext.Repository;
-                var context = orgContext.DbContext;
+                //Arrange
+                context.SeedDatabase();
 
-                orgContext.SeedDatabase();
-
-                var controller = new OrganizationController(null, repostory);
-
-                var org = context.Organizations.First();
-
-                var changeSet = new OrganizationRequest
+                var doiHeader = context.DbContext.DoiHeaders.First();
+                var doiHeaderRequest = new DoiHeaderRequest
                 {
-                    Name = "Update Test"
+                    ApprovedDate = doiHeader.ApprovedDate,
+                    ApprovedFlag = doiHeader.ApprovedFlag,
+                    ApprovedUserId = doiHeader.ApprovedUserId,
+                    Description = "UpdatedDescription",
+                    OrganizationId = doiHeader.OrganizationId,
                 };
 
-                Assert.AreNotEqual(org.Name, changeSet.Name);
+                //Act
+                var action = new DoiHeaderController(null, new DoiHeaderRepository(context.DbContext)).UpdateDoiHeader(doiHeader.Id, doiHeaderRequest).Result as OkObjectResult;
 
-                var action = controller.UpdateOrganization(org.Id, changeSet).Result as OkObjectResult;
-                var result = action.Value as OrganizationResponse;
-
-                Assert.AreEqual(org.Id, result.Id);
-                Assert.AreEqual(org.Name, result.Name);
+                //Assert
+                var result = action.Value as DoiHeaderResponse;
+                
+                Assert.AreEqual(doiHeader.Description, result.Description);
             }
         }
     }

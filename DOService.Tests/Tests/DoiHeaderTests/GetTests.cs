@@ -1,10 +1,12 @@
 using DOService.Controllers;
 using DOService.Models;
-using DOService.Tests.FakeDbContexts.OrganizationContext;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using DOService.Tests.FakeDbContexts.DoiHeaderContext;
+using DOService.Features.DoiHeaderRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace DOService.Tests.DoiHeaderTests
 {
@@ -12,42 +14,46 @@ namespace DOService.Tests.DoiHeaderTests
     public class GetTests
     {
         [TestMethod]
-        public void GetOrganizations_ShouldReturnAllOrganizations()
+        public void GetDoiHeaders_ShouldReturnAllDoiHeaders()
         {
-            using (var orgContext = new OrganizationContext("DoiHeader.GetTests"))
+            using (var context = new DoiHeaderContext("DoiHeader.GetTests"))
             {
-                var repostory = orgContext.Repository;
+                //Arrange
+                context.SeedDatabase();
 
-                orgContext.SeedDatabase();
+                //Act
+                var action = new DoiHeaderController(null, new DoiHeaderRepository(context.DbContext)).GetDoiHeaders().Result as OkObjectResult;
 
-                var controller = new OrganizationController(null, repostory);
-
-                var action = controller.GetOrganizations().Result as OkObjectResult;
-                var result = (action.Value as IEnumerable<Organization>).ToList();
-
-                Assert.AreEqual(3, result.Count);
+                //Assert
+                Assert.AreEqual(3, (action.Value as IEnumerable<DoiHeaderResponse>).Count());
             }
         }
 
         [TestMethod]
-        public void GetOrganization_ShouldReturnAnOrganization()
+        public void GetDoiHeader_ShouldReturnADoiHeader()
         {
-            using (var orgContext = new OrganizationContext("DoiHeader.GetTests"))
+            using (var context = new DoiHeaderContext("DoiHeader.GetTests"))
             {
-                var repostory = orgContext.Repository;
-                var context = orgContext.DbContext;
+                //Arrange
+                context.SeedDatabase();
 
-                orgContext.SeedDatabase();
+                var doiHeader = context.DbContext.DoiHeaders.Include(x => x.Organization).First();
 
-                var controller = new OrganizationController(null, repostory);
+                //Act
+                var action = new DoiHeaderController(null, new DoiHeaderRepository(context.DbContext)).GetDoiHeader(doiHeader.Id).Result as OkObjectResult;
 
-                var org = context.Organizations.First();
+                //Assert
+                var result = action.Value as DoiHeaderResponse;
 
-                var action = controller.GetOrganization(org.Id).Result as OkObjectResult;
-                var result = action.Value as OrganizationResponse;
-
-                Assert.AreEqual(org.Id, result.Id);
-                Assert.AreEqual(org.Name, result.Name);
+                Assert.AreEqual(doiHeader.Id, result.Id);
+                Assert.AreEqual(doiHeader.Description, result.Description);
+                Assert.AreEqual(doiHeader.ApprovedFlag, result.ApprovedFlag);
+                Assert.AreEqual(doiHeader.ApprovedDate, result.ApprovedDate);
+                Assert.AreEqual(doiHeader.ApprovedUserId, result.ApprovedUserId);
+                Assert.AreEqual(doiHeader.CreatedDate, result.CreatedDate);
+                Assert.AreEqual(doiHeader.OrganizationId, result.OrganizationId);
+                Assert.AreEqual(doiHeader.Organization.Id, result.Organization.Id);
+                Assert.AreEqual(doiHeader.Organization.Name, result.Organization.Name);
             }
         }
     }

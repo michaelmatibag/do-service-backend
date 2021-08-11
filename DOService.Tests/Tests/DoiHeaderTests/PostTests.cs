@@ -1,6 +1,8 @@
+using System.Linq;
 using DOService.Controllers;
+using DOService.Features.DoiHeaderRepository;
 using DOService.Models;
-using DOService.Tests.FakeDbContexts.OrganizationContext;
+using DOService.Tests.FakeDbContexts.DoiHeaderContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,25 +12,30 @@ namespace DOService.Tests.DoiHeaderTests
     public class PostTests
     {
         [TestMethod]
-        public void AddOrganization_ShouldAddAnOrganization()
+        public void AddDoiHeader_ShouldAddADoiHeader()
         {
-            using (var orgContext = new OrganizationContext("DoiHeader.PostTests"))
+            using (var context = new DoiHeaderContext("DoiHeader.PostTests"))
             {
-                var repostory = orgContext.Repository;
+                //Arrange
+                context.SeedDatabase();
 
-                orgContext.SeedDatabase();
-
-                var controller = new OrganizationController(null, repostory);
-
-                var newOrg = new OrganizationRequest
+                var organization = context.DbContext.Organizations.First();
+                var doiHeaderRequest = new DoiHeaderRequest
                 {
-                    Name = "Test Org 4"
+                    Description = "NewDoiHeader",
+                    OrganizationId = organization.Id
                 };
 
-                var action = controller.AddOrganization(newOrg).Result as OkObjectResult;
-                var result = action.Value as OrganizationResponse;
+                //Act
+                var action = new DoiHeaderController(null, new DoiHeaderRepository(context.DbContext)).AddDoiHeader(doiHeaderRequest).Result as OkObjectResult;
 
-                Assert.AreEqual(newOrg.Name, result.Name);
+                //Assert
+                var result = action.Value as DoiHeaderResponse;
+
+                Assert.AreEqual(doiHeaderRequest.Description, result.Description);
+                Assert.AreEqual(doiHeaderRequest.OrganizationId, result.OrganizationId);
+                Assert.AreEqual(organization.Id, result.Organization.Id);
+                Assert.AreEqual(organization.Name, result.Organization.Name);
             }
         }
     }
