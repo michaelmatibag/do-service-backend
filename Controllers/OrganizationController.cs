@@ -22,11 +22,11 @@ namespace DOService.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<OrganizationResponse>> GetAllOrganizations()
+        public ActionResult<ICollection<OrganizationResponse>> GetOrganizations()
         {
             try
             {
-                return Ok(_orgRepository.GetAllOrganizations());
+                return Ok(_orgRepository.GetOrganizations());
             }
             catch (Exception e)
             {

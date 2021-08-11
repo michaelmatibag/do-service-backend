@@ -8,7 +8,7 @@ namespace DOService.Features.OrganizationRepository
     {
         OrganizationResponse AddOrganziation(OrganizationRequest request);
         OrganizationResponse GetOrganization(Guid id);
-        IEnumerable<OrganizationResponse> GetAllOrganizations();
+        IEnumerable<OrganizationResponse> GetOrganizations();
         OrganizationResponse UpdateOrganziation(Guid id, OrganizationRequest request);
         void DeleteOrganization(Guid id);
     }

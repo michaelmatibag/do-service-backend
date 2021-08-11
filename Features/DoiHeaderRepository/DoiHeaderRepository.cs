@@ -69,9 +69,15 @@ namespace DOService.Features.DoiHeaderRepository
 
         public DoiHeaderResponse GetDoiHeader(Guid id)
         {
-            var doiHeader = _context.DoiHeaders.Include(x => x.Organization).FirstOrDefault(x => x.Id == id);
+            var doiHeader = _context.DoiHeaders
+                .Include(x => x.Organization)
+                .Include(x => x.DoiOwners)
+                .FirstOrDefault(x => x.Id == id);
 
-            return new DoiHeaderResponse
+            if (doiHeader == null)
+                throw new KeyNotFoundException($"DOI header with id {id} could not be found.");
+
+            var response = new DoiHeaderResponse
             {
                 ApprovedDate = doiHeader.ApprovedDate,
                 ApprovedFlag = doiHeader.ApprovedFlag,
@@ -86,15 +92,37 @@ namespace DOService.Features.DoiHeaderRepository
                     Name = doiHeader.Organization.Name
                 }
             };
+
+            if(doiHeader.DoiOwners.Any())
+            {
+                response.DoiOwners = doiHeader.DoiOwners.Select(owner => new DoiOwnerResponse
+                {
+                    BurdenGroupId = owner.BurdenGroupId,
+                    CreatedDate = owner.CreatedDate,
+                    DoiHeaderId = owner.DoiHeaderId,
+                    EffectiveFromDate = owner.EffectiveFromDate,
+                    EffectiveToDate = owner.EffectiveToDate,
+                    Id = owner.Id,
+                    InterestType = owner.InterestType,
+                    NriDecimal = owner.NriDecimal,
+                    OrganizationId = owner.OrganizationId,
+                    OwnerId = owner.OwnerId,
+                    OwnerName = owner.OwnerName,
+                    PayCode = owner.PayCode,
+                    SuspenseReason = owner.SuspenseReason
+                });
+            }
+
+            return response;
         }
 
         public IEnumerable<DoiHeaderResponse> GetDoiHeaders()
         {
             var response = new List<DoiHeaderResponse>();
 
-            foreach (var item in _context.DoiHeaders.Include(x => x.Organization))
+            foreach (var item in _context.DoiHeaders.Include(x => x.Organization).Include(x => x.DoiOwners))
             {
-                response.Add(new DoiHeaderResponse
+                var doiHeader = new DoiHeaderResponse
                 {
                     ApprovedDate = item.ApprovedDate,
                     ApprovedFlag = item.ApprovedFlag,
@@ -108,7 +136,29 @@ namespace DOService.Features.DoiHeaderRepository
                         Id = item.Organization.Id,
                         Name = item.Organization.Name
                     }
-                });
+                };
+
+                if (item.DoiOwners.Any())
+                {
+                    doiHeader.DoiOwners = item.DoiOwners.Select(owner => new DoiOwnerResponse
+                    {
+                        BurdenGroupId = owner.BurdenGroupId,
+                        CreatedDate = owner.CreatedDate,
+                        DoiHeaderId = owner.DoiHeaderId,
+                        EffectiveFromDate = owner.EffectiveFromDate,
+                        EffectiveToDate = owner.EffectiveToDate,
+                        Id = owner.Id,
+                        InterestType = owner.InterestType,
+                        NriDecimal = owner.NriDecimal,
+                        OrganizationId = owner.OrganizationId,
+                        OwnerId = owner.OwnerId,
+                        OwnerName = owner.OwnerName,
+                        PayCode = owner.PayCode,
+                        SuspenseReason = owner.SuspenseReason
+                    });
+                }
+
+                response.Add(doiHeader);
             }
 
             return response;

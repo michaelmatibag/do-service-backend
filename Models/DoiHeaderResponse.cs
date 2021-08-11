@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace DOService.Models
 {
@@ -12,5 +13,6 @@ namespace DOService.Models
         public string ApprovedUserId { get; set; }
         public DateTime CreatedDate { get; set; }
         public OrganizationResponse Organization { get; set; }
+        public IEnumerable<DoiOwnerResponse> DoiOwners { get; set; }
     }
 }

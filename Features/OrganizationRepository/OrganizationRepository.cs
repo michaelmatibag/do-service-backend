@@ -33,7 +33,7 @@ namespace DOService.Features.OrganizationRepository
 
         public OrganizationResponse GetOrganization(Guid id)
         {
-            var org = _context.Organizations.Include(org => org.DoiHeaders).Where(org => org.Id == id).First();
+            var org = _context.Organizations.Include(org => org.DoiHeaders).FirstOrDefault(org => org.Id == id);
 
             if (org == null)
                 throw new KeyNotFoundException($"Organization with id {id} could not be found.");
@@ -61,12 +61,11 @@ namespace DOService.Features.OrganizationRepository
             return response;
         }
 
-        public IEnumerable<OrganizationResponse> GetAllOrganizations()
+        public IEnumerable<OrganizationResponse> GetOrganizations()
         {
-            var orgs = _context.Organizations.Include(x => x.DoiHeaders).OrderBy(org => org.Name);
             var response = new List<OrganizationResponse>();
 
-            foreach (var org in orgs)
+            foreach (var org in _context.Organizations.Include(x => x.DoiHeaders).OrderBy(org => org.Name))
             {
                 var organization = new OrganizationResponse
                 {

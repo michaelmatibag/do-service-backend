@@ -12,7 +12,7 @@ namespace DOService.Tests.DoiHeaderTests
     public class GetTests
     {
         [TestMethod]
-        public void GetAllOrganizations_ShouldReturnAllOrganizations()
+        public void GetOrganizations_ShouldReturnAllOrganizations()
         {
             using (var orgContext = new OrganizationContext("DoiHeader.GetTests"))
             {
@@ -22,7 +22,7 @@ namespace DOService.Tests.DoiHeaderTests
 
                 var controller = new OrganizationController(null, context);
 
-                var action = controller.GetAllOrganizations().Result as OkObjectResult;
+                var action = controller.GetOrganizations().Result as OkObjectResult;
                 var result = (action.Value as IEnumerable<Organization>).ToList();
 
                 Assert.AreEqual(3, result.Count);
