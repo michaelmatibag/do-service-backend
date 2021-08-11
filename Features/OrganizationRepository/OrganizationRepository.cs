@@ -67,7 +67,7 @@ namespace DOService.Features.OrganizationRepository
             if(org.DoiOwners.Any())
             {
                 response.ActiveOwners = org.DoiOwners
-                        .Where(owner => owner.EffectiveFromDate <= date && date >= owner.EffectiveToDate)
+                        .Where(owner => owner.EffectiveFromDate <= date && date <= owner.EffectiveToDate)
                         .Select(owner => new DoiOwnerResponse
                 {
                     BurdenGroupId = owner.BurdenGroupId,
