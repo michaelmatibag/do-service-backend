@@ -1,4 +1,5 @@
 using DOService.Controllers;
+using DOService.Features.OrganizationRepository;
 using DOService.Models;
 using DOService.Tests.FakeDbContexts.OrganizationContext;
 using Microsoft.AspNetCore.Mvc;
@@ -13,29 +14,21 @@ namespace DOService.Tests.OrganizationTests
         [TestMethod]
         public void UpdateOrganization_ShouldUpdateAnOrganization()
         {
-            using (var orgContext = new OrganizationContext("PutTests.UpdateOrganization"))
+            using (var context = new OrganizationContext("PutTests.UpdateOrganization"))
             {
-                var repository = orgContext.Repository;
-                var context = orgContext.DbContext;
 
-                orgContext.SeedDatabase();
+                context.SeedDatabase();
 
-                var controller = new OrganizationController(null, repository);
+                var organization = context.DbContext.Organizations.First();
 
-                var org = context.Organizations.First();
+                var organizationRequest = new OrganizationRequest { Name = "Update Test" };
 
-                var changeSet = new OrganizationRequest
-                {
-                    Name = "Update Test"
-                };
-
-                Assert.AreNotEqual(org.Name, changeSet.Name);
-
-                var action = controller.UpdateOrganization(org.Id, changeSet).Result as OkObjectResult;
+                var action = new OrganizationController(null, new OrganizationRepository(context.DbContext)).UpdateOrganization(organization.Id, organizationRequest).Result as OkObjectResult;
+                
                 var result = action.Value as OrganizationResponse;
 
-                Assert.AreEqual(org.Id, result.Id);
-                Assert.AreEqual(org.Name, result.Name);
+                Assert.AreEqual(organization.Id, result.Id);
+                Assert.AreEqual(organization.Name, result.Name);
             }
         }
     }

@@ -13,7 +13,7 @@ namespace DOService.Tests.DoiHeaderTests
         [TestMethod]
         public void DeleteDoiHeader_ShouldDeleteADoiHeader()
         {
-            using (var context = new DoiHeaderContext("DoiHeader.DeleteTests"))
+            using (var context = new DoiHeaderContext("DeleteTests.DeleteDoiHeader"))
             {
                 //Arrange
                 context.SeedDatabase();
@@ -26,7 +26,7 @@ namespace DOService.Tests.DoiHeaderTests
                 //Assert
                 Assert.IsNotNull(action);
                 Assert.AreEqual(action.StatusCode, 200);
-                Assert.IsNull(context.DbContext.Organizations.Find(doiHeader.Id));
+                Assert.IsNull(context.DbContext.DoiHeaders.Find(doiHeader.Id));
             }
         }
     }

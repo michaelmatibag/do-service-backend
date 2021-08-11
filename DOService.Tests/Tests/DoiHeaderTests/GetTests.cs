@@ -16,7 +16,7 @@ namespace DOService.Tests.DoiHeaderTests
         [TestMethod]
         public void GetDoiHeaders_ShouldReturnAllDoiHeaders()
         {
-            using (var context = new DoiHeaderContext("DoiHeader.GetTests"))
+            using (var context = new DoiHeaderContext("GetTests.GetDoiHeaders"))
             {
                 //Arrange
                 context.SeedDatabase();
@@ -32,7 +32,7 @@ namespace DOService.Tests.DoiHeaderTests
         [TestMethod]
         public void GetDoiHeader_ShouldReturnADoiHeader()
         {
-            using (var context = new DoiHeaderContext("DoiHeader.GetTests"))
+            using (var context = new DoiHeaderContext("GetTests.GetDoiHeader"))
             {
                 //Arrange
                 context.SeedDatabase();

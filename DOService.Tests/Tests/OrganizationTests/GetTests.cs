@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using DOService.Features.OrganizationRepository;
 
 namespace DOService.Tests.OrganizationTests
 {
@@ -14,40 +15,31 @@ namespace DOService.Tests.OrganizationTests
         [TestMethod]
         public void GetOrganizations_ShouldReturnAllOrganizations()
         {
-            using (var orgContext = new OrganizationContext("GetTests.GetOrganizations"))
+            using (var context = new OrganizationContext("GetTests.GetOrganizations"))
             {
-                var repository = orgContext.Repository;
+                context.SeedDatabase();
 
-                orgContext.SeedDatabase();
+                var action = new OrganizationController(null, new OrganizationRepository(context.DbContext)).GetOrganizations().Result as OkObjectResult;
 
-                var controller = new OrganizationController(null, repository);
-
-                var action = controller.GetOrganizations().Result as OkObjectResult;
-                var result = (action.Value as IEnumerable<OrganizationResponse>).ToList();
-
-                Assert.AreEqual(3, result.Count);
+                Assert.AreEqual(3, (action.Value as IEnumerable<OrganizationResponse>).Count());
             }
         }
 
         [TestMethod]
         public void GetOrganization_ShouldReturnAnOrganization()
         {
-            using (var orgContext = new OrganizationContext("GetTests.GetOrganization"))
+            using (var context = new OrganizationContext("GetTests.GetOrganization"))
             {
-                var context = orgContext.DbContext;
-                var repository = orgContext.Repository;
+                context.SeedDatabase();
 
-                orgContext.SeedDatabase();
+                var organization = context.DbContext.Organizations.First();
 
-                var controller = new OrganizationController(null, repository);
-
-                var org = context.Organizations.First();
-
-                var action = controller.GetOrganization(org.Id).Result as OkObjectResult;
+                var action = new OrganizationController(null, new OrganizationRepository(context.DbContext)).GetOrganization(organization.Id).Result as OkObjectResult;
+                
                 var result = action.Value as OrganizationResponse;
 
-                Assert.AreEqual(org.Id, result.Id);
-                Assert.AreEqual(org.Name, result.Name);
+                Assert.AreEqual(organization.Id, result.Id);
+                Assert.AreEqual(organization.Name, result.Name);
             }
         }
     }

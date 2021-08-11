@@ -1,4 +1,5 @@
 using DOService.Controllers;
+using DOService.Features.OrganizationRepository;
 using DOService.Models;
 using DOService.Tests.FakeDbContexts.OrganizationContext;
 using Microsoft.AspNetCore.Mvc;
@@ -12,23 +13,17 @@ namespace DOService.Tests.DoiOwnerTests
         [TestMethod]
         public void AddOrganization_ShouldAddAnOrganization()
         {
-            using (var orgContext = new OrganizationContext("DoiOwner.PostTests"))
+            using (var context = new OrganizationContext("PostTests.AddDoiOwner"))
             {
-                var repostory = orgContext.Repository;
+                context.SeedDatabase();
 
-                orgContext.SeedDatabase();
+                var organizationRequest = new OrganizationRequest { Name = "Test Org 4" };
 
-                var controller = new OrganizationController(null, repostory);
+                var action = new OrganizationController(null, new OrganizationRepository(context.DbContext)).AddOrganization(organizationRequest).Result as OkObjectResult;
 
-                var newOrg = new OrganizationRequest
-                {
-                    Name = "Test Org 4"
-                };
-
-                var action = controller.AddOrganization(newOrg).Result as OkObjectResult;
                 var result = action.Value as OrganizationResponse;
 
-                Assert.AreEqual(newOrg.Name, result.Name);
+                Assert.AreEqual(organizationRequest.Name, result.Name);
             }
         }
     }

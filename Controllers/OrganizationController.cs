@@ -22,7 +22,7 @@ namespace DOService.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<OrganizationResponse>> GetOrganizations()
+        public ActionResult<IEnumerable<OrganizationResponse>> GetOrganizations()
         {
             try
             {
@@ -79,7 +79,7 @@ namespace DOService.Controllers
             try
             {
                 _orgRepository.DeleteOrganization(id);
-                return Ok(null);
+                return Ok();
             }
             catch (Exception e)
             {

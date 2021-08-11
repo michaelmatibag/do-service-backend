@@ -6,10 +6,8 @@ namespace DOService.Tests.FakeDbContexts.OrganizationContext
 {
     public sealed class OrganizationContext : DbContext
     {
-        private OrganizationRepository _repository;
-        public OrganizationRepository Repository { get { return _repository; } }
-
         private DOServiceContext _dbContext;
+
         public DOServiceContext DbContext { get { return _dbContext; } }
 
         public OrganizationContext(string testName)
@@ -19,8 +17,6 @@ namespace DOService.Tests.FakeDbContexts.OrganizationContext
                 .Options;
 
             _dbContext = new DOServiceContext(options);
-
-            _repository = new OrganizationRepository(_dbContext);
         }
 
         public void SeedDatabase()

@@ -14,7 +14,7 @@ namespace DOService.Tests.DoiHeaderTests
         [TestMethod]
         public void AddDoiHeader_ShouldAddADoiHeader()
         {
-            using (var context = new DoiHeaderContext("DoiHeader.PostTests"))
+            using (var context = new DoiHeaderContext("PostTests.AddDoiHeader"))
             {
                 //Arrange
                 context.SeedDatabase();
