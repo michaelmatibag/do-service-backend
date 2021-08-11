@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 using DOService.Models;
-using Microsoft.EntityFrameworkCore;
+using DOService.Features.DoiHeaderRepository;
+using System.Collections.Generic;
 
 namespace DOService.Controllers
 {
@@ -12,36 +12,33 @@ namespace DOService.Controllers
     public class DoiHeaderController : ControllerBase
     {
         private readonly ILogger<DoiHeaderController> _logger;
-        private readonly DOServiceContext _context;
+        private readonly IDoiHeaderRepository _doiHeaderRepository;
 
-        public DoiHeaderController(ILogger<DoiHeaderController> logger, DOServiceContext context)
+        public DoiHeaderController(ILogger<DoiHeaderController> logger, IDoiHeaderRepository doiHeaderRepository)
         {
             _logger = logger;
-            _context = context;
+            _doiHeaderRepository = doiHeaderRepository;
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<DoiHeaderResponse> GetDoiHeader(Guid id)
+        {
+            try
+            {
+                return Ok(_doiHeaderRepository.GetDoiHeader(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.InnerException);
+            }
         }
 
         [HttpGet]
-        public ActionResult<DoiHeaderResponse> Get(Guid id)
+        public ActionResult<IEnumerable<DoiHeaderResponse>> GetDoiHeaders()
         {
             try
             {
-                var doiHeader = _context.DoiHeaders.Include(x => x.Organization).FirstOrDefault(x => x.Id == id);
-
-                return Ok(new DoiHeaderResponse
-                {
-                    ApprovedDate = doiHeader.ApprovedDate,
-                    ApprovedFlag = doiHeader.ApprovedFlag,
-                    ApprovedUserId = doiHeader.ApprovedUserId,
-                    CreatedDate = doiHeader.CreatedDate,
-                    Description = doiHeader.Description,
-                    Id = doiHeader.Id,
-                    OrganizationId = doiHeader.OrganizationId,
-                    Organization = new DoiHeaderOrganization
-                    {
-                        Id = doiHeader.Organization.Id,
-                        Name = doiHeader.Organization.Name
-                    }
-                });
+                return Ok(_doiHeaderRepository.GetDoiHeaders());
             }
             catch (Exception e)
             {
@@ -49,47 +46,12 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult<DoiHeaderResponse> Add(DoiHeaderRequest request)
+        [HttpPost("{request}")]
+        public ActionResult<DoiHeaderResponse> AddDoiHeader(DoiHeaderRequest request)
         {
             try
             {
-                var organization = _context.Organizations.Find(request.OrganizationId);
-
-                if (organization == null)
-                {
-                    return NotFound($"Organization with organization_id {request.OrganizationId} could not be found.");
-                }
-
-                var item = new DoiHeader
-                {
-                    ApprovedDate = request.ApprovedDate,
-                    ApprovedFlag = request.ApprovedFlag,
-                    ApprovedUserId = request.ApprovedUserId,
-                    CreatedDate = DateTime.Now,
-                    Description = request.Description,
-                    Id = Guid.NewGuid(),
-                    OrganizationId = organization.Id
-                };
-
-                _context.DoiHeaders.Add(item);
-                _context.SaveChanges();
-                
-                return Ok(new DoiHeaderResponse
-                {
-                    ApprovedDate = item.ApprovedDate,
-                    ApprovedFlag = item.ApprovedFlag,
-                    ApprovedUserId = item.ApprovedUserId,
-                    CreatedDate = item.CreatedDate,
-                    Description = item.Description,
-                    Id = item.Id,
-                    OrganizationId = item.OrganizationId,
-                    Organization = new DoiHeaderOrganization
-                    {
-                        Id = organization.Id,
-                        Name = organization.Name
-                    } 
-                });
+                return Ok(_doiHeaderRepository.AddDoiHeader(request));
             }
             catch (Exception e)
             {
@@ -97,76 +59,31 @@ namespace DOService.Controllers
             }
         }
 
-        [HttpDelete]
-        public IActionResult Delete(Guid id)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteDoiHeader(Guid id)
         {
             try
             {
-                var item = _context.DoiHeaders.Find(id);
-
-                if (item == null)
-                {
-                    return NotFound($"Id {id} could not be found.");
-                }
-
-                _context.DoiHeaders.Remove(item);
-                _context.SaveChanges();
+                _doiHeaderRepository.DeleteDoiHeader(id);
 
                 return Ok();
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.InnerException);
             }
         }
 
-        [HttpPut]
-        public ActionResult<DoiHeaderResponse> Update(Guid id, DoiHeaderRequest request)
+        [HttpPut("{id}/{request}")]
+        public ActionResult<DoiHeaderResponse> UpdateDoiHeader(Guid id, DoiHeaderRequest request)
         {
             try
             {
-                var item = _context.DoiHeaders.Find(id);
-
-                if (item == null)
-                {
-                    return NotFound($"Id {id} could not be found.");
-                }
-
-                var organization = _context.Organizations.Find(request.OrganizationId);
-
-                if (organization == null)
-                {
-                    return NotFound($"Organization with organization_id {request.OrganizationId} could not be found.");
-                }
-
-                item.ApprovedDate = request.ApprovedDate;
-                item.ApprovedFlag = request.ApprovedFlag;
-                item.ApprovedUserId = request.ApprovedUserId;
-                item.Description = request.Description;
-                item.OrganizationId = request.OrganizationId;
-
-                _context.DoiHeaders.Update(item);
-                _context.SaveChanges();
-
-                return Ok(new DoiHeaderResponse
-                {
-                    ApprovedDate = item.ApprovedDate,
-                    ApprovedFlag = item.ApprovedFlag,
-                    ApprovedUserId = item.ApprovedUserId,
-                    CreatedDate = item.CreatedDate,
-                    Description = item.Description,
-                    Id = item.Id,
-                    OrganizationId = item.OrganizationId,
-                    Organization = new DoiHeaderOrganization
-                    {
-                        Id = organization.Id,
-                        Name = organization.Name
-                    } 
-                });
+                return Ok(_doiHeaderRepository.UpdateDoiHeader(id, request));
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.InnerException);
             }
         }
     }
