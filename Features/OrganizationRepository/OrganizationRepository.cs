@@ -33,7 +33,7 @@ namespace DOService.Features.OrganizationRepository
 
         public OrganizationResponse GetOrganization(Guid id)
         {
-            var org = _context.Organizations.Find(id);
+            var org = _context.Organizations.Include(org => org.DoiHeaders).Where(org => org.Id == id).First();
 
             if (org == null)
                 throw new KeyNotFoundException($"Organization with id {id} could not be found.");
@@ -43,6 +43,24 @@ namespace DOService.Features.OrganizationRepository
                 Id = org.Id,
                 Name = org.Name
             };
+
+            if(org.DoiHeaders.Any())
+            {
+                response.DoiHeaders = org.DoiHeaders.Select(dh => new DoiHeaderResponse
+                {
+                    ApprovedDate = dh.ApprovedDate,
+                    ApprovedFlag = dh.ApprovedFlag,
+                    ApprovedUserId = dh.ApprovedUserId,
+                    CreatedDate = dh.ApprovedDate,
+                    Description = dh.Description,
+                    Id = dh.Id,
+                    OrganizationId = dh.OrganizationId
+                });
+            }
+                
+
+
+
 
             return response;
         }
@@ -62,20 +80,15 @@ namespace DOService.Features.OrganizationRepository
 
                 if (org.DoiHeaders.Any())
                 {
-                    organization.DoiHeaders = new List<DoiHeaderResponse>();
-                }
-
-                foreach (var doiHeader in org.DoiHeaders)
-                {
-                    organization.DoiHeaders.Add(new DoiHeaderResponse
+                    organization.DoiHeaders = org.DoiHeaders.Select(dh => new DoiHeaderResponse
                     {
-                        ApprovedDate = doiHeader.ApprovedDate,
-                        ApprovedFlag = doiHeader.ApprovedFlag,
-                        ApprovedUserId = doiHeader.ApprovedUserId,
-                        CreatedDate = doiHeader.ApprovedDate,
-                        Description = doiHeader.Description,
-                        Id = doiHeader.Id,
-                        OrganizationId = doiHeader.OrganizationId
+                        ApprovedDate = dh.ApprovedDate,
+                        ApprovedFlag = dh.ApprovedFlag,
+                        ApprovedUserId = dh.ApprovedUserId,
+                        CreatedDate = dh.ApprovedDate,
+                        Description = dh.Description,
+                        Id = dh.Id,
+                        OrganizationId = dh.OrganizationId
                     });
                 }
 

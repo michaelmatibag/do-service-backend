@@ -22,7 +22,7 @@ namespace DOService.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public virtual IList<DoiHeaderResponse> DoiHeaders { get; set; }
+        public virtual IEnumerable<DoiHeaderResponse> DoiHeaders { get; set; }
     }
 
     public class OrganizationRequest
