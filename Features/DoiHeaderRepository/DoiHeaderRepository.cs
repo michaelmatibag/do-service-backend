@@ -47,7 +47,7 @@ namespace DOService.Features.DoiHeaderRepository
                 Description = item.Description,
                 Id = item.Id,
                 OrganizationId = item.OrganizationId,
-                Organization = new OrganziationResponse
+                Organization = new OrganizationResponse
                 {
                     Id = organization.Id,
                     Name = organization.Name
@@ -80,7 +80,7 @@ namespace DOService.Features.DoiHeaderRepository
                 Description = doiHeader.Description,
                 Id = doiHeader.Id,
                 OrganizationId = doiHeader.OrganizationId,
-                Organization = new OrganziationResponse
+                Organization = new OrganizationResponse
                 {
                     Id = doiHeader.Organization.Id,
                     Name = doiHeader.Organization.Name
@@ -103,7 +103,7 @@ namespace DOService.Features.DoiHeaderRepository
                     Description = item.Description,
                     Id = item.Id,
                     OrganizationId = item.OrganizationId,
-                    Organization = new OrganziationResponse
+                    Organization = new OrganizationResponse
                     {
                         Id = item.Organization.Id,
                         Name = item.Organization.Name
@@ -148,7 +148,7 @@ namespace DOService.Features.DoiHeaderRepository
                 Description = item.Description,
                 Id = item.Id,
                 OrganizationId = item.OrganizationId,
-                Organization = new OrganziationResponse
+                Organization = new OrganizationResponse
                 {
                     Id = organization.Id,
                     Name = organization.Name

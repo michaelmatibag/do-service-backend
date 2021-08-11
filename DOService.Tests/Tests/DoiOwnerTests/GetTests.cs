@@ -43,7 +43,7 @@ namespace DOService.Tests.DoiOwnerTests
                 var org = context.Organizations.First();
 
                 var action = controller.GetOrganization(org.Id).Result as OkObjectResult;
-                var result = action.Value as OrganziationResponse;
+                var result = action.Value as OrganizationResponse;
 
                 Assert.AreEqual(org.Id, result.Id);
                 Assert.AreEqual(org.Name, result.Name);

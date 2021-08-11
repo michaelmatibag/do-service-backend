@@ -10,7 +10,7 @@ namespace DOService.Tests.OrganizationTests
     public class PostTests
     {
         [TestMethod]
-        public void AddOrganziation_ShouldAddAnOrganization()
+        public void AddOrganization_ShouldAddAnOrganization()
         {
             using (var orgContext = new OrganizationContext("Organization.PostTests"))
             {
@@ -20,13 +20,13 @@ namespace DOService.Tests.OrganizationTests
 
                 var controller = new OrganizationController(null, context);
 
-                var newOrg = new OrganziationRequest
+                var newOrg = new OrganizationRequest
                 {
                     Name = "Test Org 4"
                 };
 
-                var action = controller.AddOrganziation(newOrg).Result as OkObjectResult;
-                var result = action.Value as OrganziationResponse;
+                var action = controller.AddOrganization(newOrg).Result as OkObjectResult;
+                var result = action.Value as OrganizationResponse;
 
                 Assert.AreEqual(newOrg.Name, result.Name);
             }

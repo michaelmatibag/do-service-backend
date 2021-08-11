@@ -21,12 +21,12 @@ namespace DOService.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<OrganziationResponse>> GetAllOrganizations()
+        public ActionResult<ICollection<OrganizationResponse>> GetAllOrganizations()
         {
             try
             {
                 var orgs = _context.Organizations.OrderBy(org => org.Name);
-                var responses = orgs.Select(org => new OrganziationResponse
+                var responses = orgs.Select(org => new OrganizationResponse
                 {
                     Id = org.Id,
                     Name = org.Name
@@ -42,7 +42,7 @@ namespace DOService.Controllers
 
         [HttpGet]
         [Route("{orgId}")]
-        public ActionResult<OrganziationResponse> GetOrganization(Guid orgId)
+        public ActionResult<OrganizationResponse> GetOrganization(Guid orgId)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace DOService.Controllers
                 if (org == null)
                     return NotFound($"Organization with id {orgId} could not be found.");
 
-                var response = new OrganziationResponse
+                var response = new OrganizationResponse
                 {
                     Id = org.Id,
                     Name = org.Name
@@ -66,7 +66,7 @@ namespace DOService.Controllers
         }
 
         [HttpPost]
-        public ActionResult<OrganziationResponse> AddOrganziation(OrganziationRequest request)
+        public ActionResult<OrganizationResponse> AddOrganization(OrganizationRequest request)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace DOService.Controllers
                 _context.Organizations.Add(org);
                 _context.SaveChanges();
 
-                var response = new OrganziationResponse
+                var response = new OrganizationResponse
                 {
                     Id = org.Id,
                     Name = org.Name
@@ -91,7 +91,7 @@ namespace DOService.Controllers
 
         [HttpPut]
         [Route("{orgId}")]
-        public ActionResult<OrganziationResponse> UpdateOrganziation(Guid orgId, OrganziationRequest request)
+        public ActionResult<OrganizationResponse> UpdateOrganization(Guid orgId, OrganizationRequest request)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace DOService.Controllers
                 _context.Organizations.Update(org);
                 _context.SaveChanges();
 
-                var response = new OrganziationResponse
+                var response = new OrganizationResponse
                 {
                     Id = org.Id,
                     Name = org.Name

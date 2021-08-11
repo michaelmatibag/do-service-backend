@@ -30,7 +30,7 @@ namespace DOService.Models
 
         public DateTime CreatedDate { get; set; }
 
-        public OrganziationResponse Organziation { get; set; }
+        public OrganizationResponse Organization { get; set; }
 
         public DoiHeaderResponse DoiHeader { get; set; }
     }

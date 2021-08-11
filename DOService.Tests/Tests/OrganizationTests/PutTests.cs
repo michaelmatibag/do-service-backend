@@ -11,7 +11,7 @@ namespace DOService.Tests.OrganizationTests
     public class PutTests
     {
         [TestMethod]
-        public void UpdateOrganziation_ShouldUpdateAnOrganization()
+        public void UpdateOrganization_ShouldUpdateAnOrganization()
         {
             using (var orgContext = new OrganizationContext("Organization.PutTests"))
             {
@@ -23,15 +23,15 @@ namespace DOService.Tests.OrganizationTests
 
                 var org = context.Organizations.First();
 
-                var changeSet = new OrganziationRequest
+                var changeSet = new OrganizationRequest
                 {
                     Name = "Update Test"
                 };
 
                 Assert.AreNotEqual(org.Name, changeSet.Name);
 
-                var action = controller.UpdateOrganziation(org.Id, changeSet).Result as OkObjectResult;
-                var result = action.Value as OrganziationResponse;
+                var action = controller.UpdateOrganization(org.Id, changeSet).Result as OkObjectResult;
+                var result = action.Value as OrganizationResponse;
 
                 Assert.AreEqual(org.Id, result.Id);
                 Assert.AreEqual(org.Name, result.Name);

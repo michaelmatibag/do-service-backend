@@ -66,7 +66,7 @@ namespace DOService.Features.DoiOwnerRepository
                 OwnerName = item.OwnerName,
                 PayCode = item.PayCode,
                 SuspenseReason = item.SuspenseReason,
-                Organziation = new OrganziationResponse
+                Organization = new OrganizationResponse
                 {
                     Id = organization.Id,
                     Name = organization.Name
@@ -115,7 +115,7 @@ namespace DOService.Features.DoiOwnerRepository
                 OwnerName = doiOwner.OwnerName,
                 PayCode = doiOwner.PayCode,
                 SuspenseReason = doiOwner.SuspenseReason,
-                Organziation = new OrganziationResponse
+                Organization = new OrganizationResponse
                 {
                     Id = doiOwner.Organization.Id,
                     Name = doiOwner.Organization.Name
@@ -154,7 +154,7 @@ namespace DOService.Features.DoiOwnerRepository
                     OwnerName = item.OwnerName,
                     PayCode = item.PayCode,
                     SuspenseReason = item.SuspenseReason,
-                    Organziation = new OrganziationResponse
+                    Organization = new OrganizationResponse
                     {
                         Id = item.Organization.Id,
                         Name = item.Organization.Name
@@ -228,7 +228,7 @@ namespace DOService.Features.DoiOwnerRepository
                 OwnerName = item.OwnerName,
                 PayCode = item.PayCode,
                 SuspenseReason = item.SuspenseReason,
-                Organziation = new OrganziationResponse
+                Organization = new OrganizationResponse
                 {
                     Id = item.Organization.Id,
                     Name = item.Organization.Name
