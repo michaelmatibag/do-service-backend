@@ -1,6 +1,6 @@
 using DOService.Controllers;
-using DOService.Features.OrganizationRepository;
-using DOService.Tests.FakeDbContexts.OrganizationContext;
+using DOService.Features.DoiOwnerRepository;
+using DOService.Tests.FakeDbContexts.DoiOwnerContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
@@ -13,17 +13,17 @@ namespace DOService.Tests.DoiOwnerTests
         [TestMethod]
         public void DeleteOrganization_ShouldUpdateAnOrganization()
         {
-            using (var context = new OrganizationContext("DeleteTests.DeleteDoiOwner"))
+            using (var context = new DoiOwnerContext("DeleteTests.DeleteDoiOwner"))
             {
                 context.SeedDatabase();
 
-                var organization = context.ServiceContext.Organizations.First();
+                var owner = context.ServiceContext.DoiOwners.First();
 
-                var action = new OrganizationController(null, new OrganizationRepository(context.ServiceContext)).DeleteOrganization(organization.Id) as OkResult;
+                var action = new DoiOwnerController(null, new DoiOwnerRepository(context.ServiceContext)).DeleteDoiOwner(owner.Id) as OkResult;
 
                 Assert.IsNotNull(action);
                 Assert.AreEqual(action.StatusCode, 200);
-                Assert.IsNull(context.ServiceContext.Organizations.Find(organization.Id));
+                Assert.IsNull(context.ServiceContext.DoiOwners.Find(owner.Id));
             }
         }
     }
