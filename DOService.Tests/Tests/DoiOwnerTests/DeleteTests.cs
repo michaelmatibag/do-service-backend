@@ -11,7 +11,7 @@ namespace DOService.Tests.DoiOwnerTests
     public class DeleteTests
     {
         [TestMethod]
-        public void DeleteOrganization_ShouldUpdateAnOrganization()
+        public void DeleteDoiOwner_ShouldDeleteDoiOwner()
         {
             using (var context = new DoiOwnerContext("DeleteTests.DeleteDoiOwner"))
             {
