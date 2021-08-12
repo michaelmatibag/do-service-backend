@@ -11,7 +11,7 @@ namespace DOService.Tests.OrganizationTests
     public class DeleteTests
     {
         [TestMethod]
-        public void DeleteOrganization_ShouldUpdateAnOrganization()
+        public void DeleteOrganization_ShouldDeleteAnOrganization()
         {
             using (var context = new OrganizationContext("DeleteTests.DeleteOrganization"))
             {

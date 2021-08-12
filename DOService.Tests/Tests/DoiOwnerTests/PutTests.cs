@@ -1,7 +1,7 @@
 using DOService.Controllers;
-using DOService.Features.OrganizationRepository;
+using DOService.Features.DoiOwnerRepository;
 using DOService.Models;
-using DOService.Tests.FakeDbContexts.OrganizationContext;
+using DOService.Tests.FakeDbContexts.DoiOwnerContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
@@ -12,23 +12,35 @@ namespace DOService.Tests.DoiOwnerTests
     public class PutTests
     {
         [TestMethod]
-        public void UpdateOrganization_ShouldUpdateAnOrganization()
+        public void UpdateDoiOwner_ShouldUpdateDoiOwner()
         {
-            using (var context = new OrganizationContext("PutTests.UpdateDoiOwner"))
+            using (var context = new DoiOwnerContext("PutTests.UpdateDoiOwner"))
             {
-
                 context.SeedDatabase();
 
-                var organization = context.ServiceContext.Organizations.First();
+                var owner = context.ServiceContext.DoiOwners.First();
+                var ownerRequest = new DoiOwnerRequest
+                {
+                    OrganizationId = owner.OrganizationId,
+                    DoiHeaderId = owner.DoiHeaderId,
+                    OwnerId = owner.OwnerId,
+                    OwnerName = "Updated Owner",
+                    PayCode = "pay",
+                    SuspenseReason = "executed",
+                    InterestType = owner.InterestType,
+                    NriDecimal = owner.NriDecimal,
+                    BurdenGroupId = owner.BurdenGroupId,
+                    EffectiveFromDate = owner.EffectiveFromDate,
+                    EffectiveToDate = owner.EffectiveToDate
+                };
 
-                var organizationRequest = new OrganizationRequest { Name = "Update Test" };
+                var action = new DoiOwnerController(null, new DoiOwnerRepository(context.ServiceContext)).UpdateDoiOwner(owner.Id, ownerRequest).Result as OkObjectResult;
 
-                var action = new OrganizationController(null, new OrganizationRepository(context.ServiceContext)).UpdateOrganization(organization.Id, organizationRequest).Result as OkObjectResult;
+                var result = action.Value as DoiOwnerResponse;
 
-                var result = action.Value as OrganizationResponse;
-
-                Assert.AreEqual(organization.Id, result.Id);
-                Assert.AreEqual(organization.Name, result.Name);
+                Assert.AreEqual(ownerRequest.OwnerName, result.OwnerName);
+                Assert.AreEqual(ownerRequest.PayCode, result.PayCode);
+                Assert.AreEqual(ownerRequest.SuspenseReason, result.SuspenseReason);
             }
         }
     }

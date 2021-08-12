@@ -13,7 +13,7 @@ namespace DOService.Tests.DoiOwnerTests
     public class GetTests
     {
         [TestMethod]
-        public void GetOrganizations_ShouldReturnAllOrganizations()
+        public void GetDoiOwners_ShouldReturnAllDoiOwners()
         {
             using (var context = new DoiOwnerContext("GetTests.GetDoiOwners"))
             {
@@ -26,7 +26,7 @@ namespace DOService.Tests.DoiOwnerTests
         }
 
         [TestMethod]
-        public void GetOrganization_ShouldReturnAnOrganization()
+        public void GetDoiOwner_ShouldReturnDoiOwner()
         {
             using (var context = new DoiOwnerContext("GetTests.GetDoiOwner"))
             {
@@ -51,8 +51,6 @@ namespace DOService.Tests.DoiOwnerTests
                 Assert.AreEqual(owner.EffectiveFromDate, result.EffectiveFromDate);
                 Assert.AreEqual(owner.EffectiveToDate, result.EffectiveToDate);
                 Assert.AreEqual(owner.CreatedDate, result.CreatedDate);
-                Assert.AreEqual(owner.Organization, result.Organization);
-                Assert.AreEqual(owner.DoiHeader, result.DoiHeader);
             }
         }
     }

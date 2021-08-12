@@ -51,16 +51,45 @@ namespace DOService.Features.OrganizationRepository
 
             if(org.DoiHeaders.Any())
             {
-                response.DoiHeaders = org.DoiHeaders.Select(dh => new DoiHeaderResponse
+                var doiHeaderResponses = new List<DoiHeaderResponse>();
+                foreach (var doiHeader in org.DoiHeaders)
                 {
-                    ApprovedDate = dh.ApprovedDate,
-                    ApprovedFlag = dh.ApprovedFlag,
-                    ApprovedUserId = dh.ApprovedUserId,
-                    CreatedDate = dh.ApprovedDate,
-                    Description = dh.Description,
-                    Id = dh.Id,
-                    OrganizationId = dh.OrganizationId
-                });
+                     var doiHeaderResponse = new DoiHeaderResponse
+                     {
+                        ApprovedDate = doiHeader.ApprovedDate,
+                        ApprovedFlag = doiHeader.ApprovedFlag,
+                        ApprovedUserId = doiHeader.ApprovedUserId,
+                        CreatedDate = doiHeader.ApprovedDate,
+                        Description = doiHeader.Description,
+                        Id = doiHeader.Id,
+                        OrganizationId = doiHeader.OrganizationId
+                     };
+
+                    if(org.DoiOwners.Any())
+                    {
+                        doiHeaderResponse.DoiOwners = org.DoiOwners
+                            .Where(owner => owner.DoiHeaderId ==  doiHeaderResponse.Id)
+                            .Select(owner => new DoiOwnerResponse
+                        {
+                            BurdenGroupId = owner.BurdenGroupId,
+                            CreatedDate = owner.CreatedDate,
+                            DoiHeaderId = owner.DoiHeaderId,
+                            EffectiveFromDate = owner.EffectiveFromDate,
+                            EffectiveToDate = owner.EffectiveToDate,
+                            Id = owner.Id,
+                            InterestType = owner.InterestType,
+                            NriDecimal = owner.NriDecimal,
+                            OrganizationId = owner.OrganizationId,
+                            OwnerId = owner.OwnerId,
+                            OwnerName = owner.OwnerName,
+                            PayCode = owner.PayCode,
+                            SuspenseReason = owner.SuspenseReason
+                        });
+                    }
+                    doiHeaderResponses.Add(doiHeaderResponse);
+                }
+
+                response.DoiHeaders = doiHeaderResponses;
             }
 
             var date = DateTime.Now;
@@ -107,16 +136,45 @@ namespace DOService.Features.OrganizationRepository
 
                 if (org.DoiHeaders.Any())
                 {
-                    organization.DoiHeaders = org.DoiHeaders.Select(dh => new DoiHeaderResponse
+                    var doiHeaderResponses = new List<DoiHeaderResponse>();
+                    foreach (var doiHeader in org.DoiHeaders)
                     {
-                        ApprovedDate = dh.ApprovedDate,
-                        ApprovedFlag = dh.ApprovedFlag,
-                        ApprovedUserId = dh.ApprovedUserId,
-                        CreatedDate = dh.ApprovedDate,
-                        Description = dh.Description,
-                        Id = dh.Id,
-                        OrganizationId = dh.OrganizationId
-                    });
+                        var doiHeaderResponse = new DoiHeaderResponse
+                        {
+                            ApprovedDate = doiHeader.ApprovedDate,
+                            ApprovedFlag = doiHeader.ApprovedFlag,
+                            ApprovedUserId = doiHeader.ApprovedUserId,
+                            CreatedDate = doiHeader.ApprovedDate,
+                            Description = doiHeader.Description,
+                            Id = doiHeader.Id,
+                            OrganizationId = doiHeader.OrganizationId
+                        };
+
+                        if (org.DoiOwners.Any())
+                        {
+                            doiHeaderResponse.DoiOwners = org.DoiOwners
+                                .Where(owner => owner.DoiHeaderId == doiHeaderResponse.Id)
+                                .Select(owner => new DoiOwnerResponse
+                                {
+                                    BurdenGroupId = owner.BurdenGroupId,
+                                    CreatedDate = owner.CreatedDate,
+                                    DoiHeaderId = owner.DoiHeaderId,
+                                    EffectiveFromDate = owner.EffectiveFromDate,
+                                    EffectiveToDate = owner.EffectiveToDate,
+                                    Id = owner.Id,
+                                    InterestType = owner.InterestType,
+                                    NriDecimal = owner.NriDecimal,
+                                    OrganizationId = owner.OrganizationId,
+                                    OwnerId = owner.OwnerId,
+                                    OwnerName = owner.OwnerName,
+                                    PayCode = owner.PayCode,
+                                    SuspenseReason = owner.SuspenseReason
+                                });
+                        }
+                        doiHeaderResponses.Add(doiHeaderResponse);
+                    }
+
+                    organization.DoiHeaders = doiHeaderResponses;
                 }
 
                 var date = DateTime.Now;

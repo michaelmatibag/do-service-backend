@@ -1,9 +1,11 @@
 using DOService.Controllers;
-using DOService.Features.OrganizationRepository;
+using DOService.Features.DoiOwnerRepository;
 using DOService.Models;
-using DOService.Tests.FakeDbContexts.OrganizationContext;
+using DOService.Tests.FakeDbContexts.DoiOwnerContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq;
 
 namespace DOService.Tests.DoiOwnerTests
 {
@@ -11,19 +13,39 @@ namespace DOService.Tests.DoiOwnerTests
     public class PostTests
     {
         [TestMethod]
-        public void AddOrganization_ShouldAddAnOrganization()
+        public void AddDoiOwner_ShouldAddDoiOwner()
         {
-            using (var context = new OrganizationContext("PostTests.AddDoiOwner"))
+            using (var context = new DoiOwnerContext("PostTests.AddDoiOwner"))
             {
                 context.SeedDatabase();
+                var organization = context.ServiceContext.Organizations.First();
+                var doiHeader = context.ServiceContext.DoiHeaders.FirstOrDefault(dh => dh.OrganizationId == organization.Id);
 
-                var organizationRequest = new OrganizationRequest { Name = "Test Org 4" };
+                var doiOwnerRequest = new DoiOwnerRequest
+                {
+                    OrganizationId = organization.Id,
+                    DoiHeaderId = doiHeader.Id,
+                    OwnerId = Guid.NewGuid(),
+                    OwnerName = "Test Owner",
+                    PayCode = "pay",
+                    SuspenseReason = "executed",
+                    InterestType = "RI",
+                    NriDecimal = 1,
+                    BurdenGroupId = Guid.NewGuid(),
+                    EffectiveFromDate = DateTime.Today,
+                    EffectiveToDate = DateTime.Today.AddYears(1)
+                };
 
-                var action = new OrganizationController(null, new OrganizationRepository(context.ServiceContext)).AddOrganization(organizationRequest).Result as OkObjectResult;
+                var action = new DoiOwnerController(null, new DoiOwnerRepository(context.ServiceContext)).AddDoiOwner(doiOwnerRequest).Result as OkObjectResult;
 
-                var result = action.Value as OrganizationResponse;
+                var result = action.Value as DoiOwnerResponse;
 
-                Assert.AreEqual(organizationRequest.Name, result.Name);
+                Assert.AreEqual(doiOwnerRequest.OrganizationId, result.OrganizationId);
+                Assert.AreEqual(doiOwnerRequest.DoiHeaderId, result.DoiHeaderId);
+                Assert.AreEqual(doiOwnerRequest.OwnerId, result.OwnerId);
+                Assert.AreEqual(doiOwnerRequest.OwnerName, result.OwnerName);
+                Assert.AreEqual(doiOwnerRequest.InterestType, result.InterestType);
+                Assert.AreEqual(doiOwnerRequest.NriDecimal, result.NriDecimal);
             }
         }
     }
