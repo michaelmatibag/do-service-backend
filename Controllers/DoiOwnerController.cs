@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Cors;
 namespace DOService.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [EnableCors]
     public class DoiOwnerController : ControllerBase
     {
