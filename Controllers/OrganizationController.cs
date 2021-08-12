@@ -10,7 +10,7 @@ using System.Linq;
 namespace DOService.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [EnableCors]
     public class OrganizationController : ControllerBase
     {
