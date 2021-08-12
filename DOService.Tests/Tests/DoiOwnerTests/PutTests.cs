@@ -21,7 +21,7 @@ namespace DOService.Tests.DoiOwnerTests
                 var owner = context.ServiceContext.DoiOwners.First();
                 var ownerRequest = new DoiOwnerRequest
                 {
-                    OrganizationId = owner.Id,
+                    OrganizationId = owner.OrganizationId,
                     DoiHeaderId = owner.DoiHeaderId,
                     OwnerId = owner.OwnerId,
                     OwnerName = "Updated Owner",
@@ -38,7 +38,7 @@ namespace DOService.Tests.DoiOwnerTests
 
                 var result = action.Value as DoiOwnerResponse;
 
-                Assert.AreEqual(ownerRequest.OwnerName, result.Id);
+                Assert.AreEqual(ownerRequest.OwnerName, result.OwnerName);
                 Assert.AreEqual(ownerRequest.PayCode, result.PayCode);
                 Assert.AreEqual(ownerRequest.SuspenseReason, result.SuspenseReason);
             }
